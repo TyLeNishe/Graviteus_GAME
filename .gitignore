@@ -1,0 +1,66 @@
+# Файлы, сгенерированные Unity
+.utmp/
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# Файлы MemoryCaptures могут быть очень большими и содержать конфиденциальные данные
+/[Mm]emoryCaptures/
+
+# Записи (Recordings) могут быть очень большими
+/[Rr]ecordings/
+
+# Плагин JetBrains Rider (автогенерируемый)
+/[Aa]ssets/Plugins/Editor/JetBrains*
+
+# Кэш-директория Visual Studio
+.vs/
+
+# Кэш-директория Gradle
+.gradle/
+
+# Автогенерируемые файлы решений и проектов
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Мета-файлы, сгенерированные Unity3D
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Файл, сгенерированный Unity3D при отчётах о сбоях
+sysinfo.txt
+
+# Сборки
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Файл, сгенерированный Crashlytics
+crashlytics-build.properties
+
+# Упакованные Addressables (временные файлы)
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+# Временные автоматически сгенерированные Android-ассеты
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
