@@ -499,7 +499,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938386288}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -738,6 +738,17 @@ MonoBehaviour:
   prefab_hexagon:
   - {fileID: 132359132345125552, guid: 44c2fab9608347845818a6483f84320b, type: 3}
   - {fileID: 4378731481494727974, guid: c562a398ef3778c49b70f1408cb5c580, type: 3}
+  - {fileID: 132359132345125552, guid: 44c2fab9608347845818a6483f84320b, type: 3}
+  - {fileID: 4378731481494727974, guid: c562a398ef3778c49b70f1408cb5c580, type: 3}
+  - {fileID: 4815905740427997448, guid: 9b15c3494cc723149807f2e78562ff1e, type: 3}
+  prefab_stone:
+  - {fileID: 3967174937273534490, guid: 547a85e0c7eef3f44b675a30ce4e7a29, type: 3}
+  - {fileID: 4305018933883262897, guid: 2394d39da55db3143be657be627c5a57, type: 3}
+  - {fileID: 384624409131898263, guid: e65bcb48052050942bed06252f55173b, type: 3}
+  - {fileID: 4439832312286557772, guid: af8a35da315f9104681e62cf9d718420, type: 3}
+  - {fileID: 3634872825474949429, guid: a076ef81c383273468f02eddb5c3fb62, type: 3}
+  prefab_mountain:
+  - {fileID: 4030382182457874432, guid: f8b0e5aba02541b41ac7402aad9810bc, type: 3}
   layers: 10
   parentObject: {fileID: 1129864305}
 --- !u!4 &1129864307
@@ -1033,7 +1044,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1549810386}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -1280,7 +1291,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2119650632}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

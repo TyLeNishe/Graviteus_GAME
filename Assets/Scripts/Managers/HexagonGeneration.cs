@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class HexagonGeneration : MonoBehaviour
 {
-    public GameObject[] prefab_hexagon; // Префабы для генерации
+    public GameObject[] prefab_hexagon, prefab_stone, prefab_mountain; // Префабы для генерации
     public int layers = 1; // Количество слоев
-    public GameObject parentObject; // Родитель для сот
+    public GameObject parentObject; // Родитель для шестиугольников
     private HashSet<GameObject> prefab_hexagon_instantiate = new HashSet<GameObject>(); // Созданные объекты
     private HashSet<Vector3> occupiedPositions = new HashSet<Vector3>(); // Занятые позиции
-    private int random_seed;
-
+    private int random_seed, random_seed_stone, random_seed_mountain;
     void Start()
     {
         if (prefab_hexagon == null || prefab_hexagon.Length == 0)
@@ -58,40 +57,70 @@ public class HexagonGeneration : MonoBehaviour
         }
     }
 
-    void spawnPrefabs(GameObject centralSot, List<GameObject> newHexagons)
+    void spawnPrefabs(GameObject centralHexagon, List<GameObject> newHexagons)
     {
-        if (centralSot == null) return;
+        if (centralHexagon == null) return;
 
-        Transform centralTransform = centralSot.transform;
+        Transform centralTransform = centralHexagon.transform;
 
         foreach (Transform child in centralTransform)
         {
-            if (!child.name.Contains("hexagon_position")) continue;
-
-            if (IsPositionOccupied(child.position))
+            random_seed_stone = Random.Range(0,10); // генерируем вероятность для спауна камней
+            int mountain_is_spawn = 0; // 0 - нет ни камня, ни горы | 1 - есть камень | 2 - есть гора
+            if (child.name.Contains("stone_position") && ( mountain_is_spawn == 0  || mountain_is_spawn == 1))
             {
-                Debug.LogWarning($"Позиция занята: {child.position}");
-                continue;
+                if (random_seed_stone >= 6)
+                {
+                    mountain_is_spawn = 1;
+                    random_seed_stone = Random.Range(0, prefab_hexagon.Length);
+                    GameObject spawnedObjectStone = Instantiate(prefab_stone[random_seed_stone], child.position, Quaternion.identity);
+                    spawnedObjectStone.transform.SetParent(child.transform);
+                    Debug.Log("Создан камень на координатах:" + spawnedObjectStone.transform.position);
+                }
             }
-
-            occupiedPositions.Add(child.position);
-
-            random_seed = Random.Range(0, prefab_hexagon.Length);
-            GameObject spawnedObject = Instantiate(prefab_hexagon[random_seed], child.position, Quaternion.identity);
-            spawnedObject.transform.SetParent(parentObject.transform);
-
-            if (spawnedObject != null)
+            else if (child.name.Contains("mountain_position") && random_seed_stone<6 && (mountain_is_spawn == 0 || mountain_is_spawn == 2))
             {
-                newHexagons.Add(spawnedObject);
+                mountain_is_spawn = 2;
+                random_seed_mountain = Random.Range(0, prefab_mountain.Length);
+                GameObject spawnedObjectmountain = Instantiate(prefab_mountain[random_seed_mountain], child.position, Quaternion.identity);
+                spawnedObjectmountain.transform.SetParent(child.transform);
+                Debug.Log("Создан камень на координатах:" + spawnedObjectmountain.transform.position);
+            }
+            else
+            {
+                if (IsPositionOccupied(child.position))
+                {
+                    Debug.LogWarning($"Позиция занята: {child.position}");
+                    continue;
+                }
+                else if (child.name.Contains("hexagon_position"))
+                {
+                    occupiedPositions.Add(child.position);
 
-                Hexagon_position logic = child.GetComponent<Hexagon_position>();
-                if (logic != null) logic.hexagon_activate();
-                else Debug.LogError("Нет компонента hexagon_position_logic!");
+                    random_seed = Random.Range(0, prefab_hexagon.Length);
+                    GameObject spawnedObjectHexagon = Instantiate(prefab_hexagon[random_seed], child.position, Quaternion.identity);
+                    spawnedObjectHexagon.transform.SetParent(parentObject.transform);
+
+                    //if (spawnedObjectHexagon.name.Contains("HexagonRift"))
+                    //{
+                    //    int random_seed_rotation = Random.Range(0, 6);
+                    //    int[] rotation = { 30, 90, 150, 210, 270, 330 };
+                    //    spawnedObjectHexagon.transform.rotation = Quaternion.Euler(spawnedObjectHexagon.transform.rotation.x,spawnedObjectHexagon.transform.rotation.y, rotation[random_seed_rotation]);
+                    //}
+                    if (spawnedObjectHexagon != null)
+                    {
+                        newHexagons.Add(spawnedObjectHexagon);
+
+                        Hexagon_position logic = child.GetComponent<Hexagon_position>();
+                        if (logic != null) logic.hexagon_activate();
+                        else Debug.LogError("Нет компонента hexagon_position_logic!");
+                    }
+                }
             }
         }
     }
 
-    bool IsPositionOccupied(Vector3 position)
+    bool IsPositionOccupied(Vector3 position) // он нажна, потому что надо ;)
     {
         foreach (var pos in occupiedPositions)
         {
@@ -106,7 +135,7 @@ public class HexagonGeneration : MonoBehaviour
         for (int i = 0; i < parentObject.transform.childCount; i++)
         {
             GameObject sot = parentObject.transform.GetChild(i).gameObject;
-            int randomHeight = Random.Range(-2, 2); // Случайное значение высоты
+            float randomHeight = Random.Range(-1, 1); // Случайное значение высоты
             sot.transform.position = new Vector3(
                 sot.transform.position.x,
                 sot.transform.position.y + randomHeight, // Изменяем высоту (ось Y)
