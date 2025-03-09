@@ -489,6 +489,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hexagon
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -529,6 +533,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3202557417317477026}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1348557107549995182}
   m_SourcePrefab: {fileID: 100100000, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
 --- !u!1 &132359132345125552 stripped
 GameObject:
@@ -554,9 +561,23 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -4575734979276873811, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+--- !u!114 &1348557107549995182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132359132345125552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2d1ae7ed2253ff4ca54dc84a48ba2d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mountain: 0
+  rift: 0
 --- !u!4 &765026177747619850 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
