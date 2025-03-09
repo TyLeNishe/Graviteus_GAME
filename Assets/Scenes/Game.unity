@@ -416,21 +416,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82bc88c551dd72e49bdd99c141c192a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab_hexagon:
+  hexPrefabs:
   - {fileID: 132359132345125552, guid: 44c2fab9608347845818a6483f84320b, type: 3}
   - {fileID: 4378731481494727974, guid: c562a398ef3778c49b70f1408cb5c580, type: 3}
   - {fileID: 1660794306540380682, guid: a0916ba6eed3b9745807f92652f3824d, type: 3}
-  prefab_stone:
+  stonePrefabs:
   - {fileID: 3967174937273534490, guid: 547a85e0c7eef3f44b675a30ce4e7a29, type: 3}
   - {fileID: 4305018933883262897, guid: 2394d39da55db3143be657be627c5a57, type: 3}
   - {fileID: 384624409131898263, guid: e65bcb48052050942bed06252f55173b, type: 3}
   - {fileID: 4439832312286557772, guid: af8a35da315f9104681e62cf9d718420, type: 3}
   - {fileID: 3634872825474949429, guid: a076ef81c383273468f02eddb5c3fb62, type: 3}
-  prefab_mountain:
+  mountainPrefabs:
   - {fileID: 7897940809637346905, guid: f8b0e5aba02541b41ac7402aad9810bc, type: 3}
-  parentObject: {fileID: 1129864305}
+  parent: {fileID: 1129864305}
   layers: 10
-  mountainCountStatic: 10
+  maxMountains: 10
 --- !u!4 &1129864307
 Transform:
   m_ObjectHideFlags: 0

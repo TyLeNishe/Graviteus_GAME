@@ -5,8 +5,8 @@ public class HexagonGeneration : MonoBehaviour
 {
     public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs;
     public GameObject parent;
-    public int layers = 1;
-    public int maxMountains;
+    public static int layers = 10;
+    public int maxMountains, maxRifts;
 
     private static List<GameObject> hexagons = new List<GameObject>();
     private List<GameObject> blockedHexes = new List<GameObject>();
@@ -31,6 +31,10 @@ public class HexagonGeneration : MonoBehaviour
 
     void Start()
     {
+        if(MenuManager.difficulty == 0) { maxMountains = 3; maxRifts = 1; }
+        else if (MenuManager.difficulty == 1) { maxMountains = 5; maxRifts = 3; }
+        else if (MenuManager.difficulty == 2) { maxMountains = 7; maxRifts = 4; }
+
         seed = Random.Range(0, hexPrefabs.Length - 1);
 
         GameObject centerHex = Instantiate(hexPrefabs[seed], Vector3.zero, Quaternion.identity);
@@ -42,8 +46,12 @@ public class HexagonGeneration : MonoBehaviour
         GenerateLayers();
         SpawnMountains();
         CreateStones();
-        CreateRift();
-        CreateRift(); // чтобы разломов было больше
+        
+        for (int rift = 0; rift <= maxRifts; rift++) //Создание нескольких разломов
+        {
+            CreateRift();                           
+        }
+
         parent.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
 
         RandomizeHeights();
