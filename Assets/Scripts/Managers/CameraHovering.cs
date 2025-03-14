@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CameraHovering : MonoBehaviour
 {
+    public GameObject TerminalObj;
     public Vector3 moveVector, scrollVector, tiltVector;
     public float moveMult = 1f, CameraTilt;
     public float moveSpeed, scrollSpeed = 1f;
@@ -19,7 +20,7 @@ public class CameraHovering : MonoBehaviour
         int up_scroll_enabled, down_scroll_enabled;
         int north_scroll_enabled, south_scroll_enabled;
 
-        //ÑÊĞÈÏÒ ÏĞÎÂÅĞÊÈ ÃĞÀÍÈÖ ÌÈĞÀ
+        //Ã‘ÃŠÃÃˆÃÃ’ ÃÃÃÃ‚Ã…ÃÃŠÃˆ ÃƒÃÃ€ÃÃˆÃ– ÃŒÃˆÃÃ€
         if (CamPos.x >= WorldBorders.East_Border) { east_scroll_enabled = 0; } else { east_scroll_enabled = 1; }
         if (CamPos.x <= WorldBorders.West_Border) { west_scroll_enabled = 0; } else { west_scroll_enabled = 1; }
 
@@ -29,7 +30,7 @@ public class CameraHovering : MonoBehaviour
         if (CamPos.z >= WorldBorders.North_Border) { north_scroll_enabled = 0; } else { north_scroll_enabled = 1; }
         if (CamPos.z <= WorldBorders.South_Border) { south_scroll_enabled = 0; } else { south_scroll_enabled = 1; }
 
-        //ÔÎĞÌÓËÛ ÑÊÎĞÎÑÒÈ È ÍÀÊËÎÍÀ ÊÀÌÅĞÛ
+        //Ã”ÃÃÃŒÃ“Ã‹Ã› Ã‘ÃŠÃÃÃÃ‘Ã’Ãˆ Ãˆ ÃÃ€ÃŠÃ‹ÃÃÃ€ ÃŠÃ€ÃŒÃ…ÃÃ›
         moveSpeed = 0.01f * moveMult * WorldBorders.CamVelDist_Mult;
         CameraTilt = (Mathf.Pow(CamPos.y, 1.9f) / 5);
         scrollSpeed = 10f;
@@ -38,7 +39,7 @@ public class CameraHovering : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift)) { moveMult = 2; } else { moveMult = 1; }
 
 
-        //WASD ÄÂÈÆÅÍÈÅ
+        //WASD Ã„Ã‚ÃˆÃ†Ã…ÃÃˆÃ…
         if (Key_W) { DirectionChosen.hov_z = 1f * north_scroll_enabled; }
 
         if (Key_S) { DirectionChosen.hov_z = -1f * south_scroll_enabled; }
@@ -49,23 +50,23 @@ public class CameraHovering : MonoBehaviour
 
 
 
-        // ÎÑÒÀÍÎÂÊÀ ÄÂÈÆÅÍÈß
+        // ÃÃ‘Ã’Ã€ÃÃÃ‚ÃŠÃ€ Ã„Ã‚ÃˆÃ†Ã…ÃÃˆÃŸ
         if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S)) { DirectionChosen.hov_z = 0f; }
         if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) { DirectionChosen.hov_x = 0f; }
 
-        //ÑÊĞÎËË
+        //Ã‘ÃŠÃÃÃ‹Ã‹
         if (Input.GetAxis("Mouse ScrollWheel") < 0) { scrollVector = new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * -scrollSpeed * up_scroll_enabled, -CameraTilt / 100 * up_scroll_enabled); }
         else if (Input.GetAxis("Mouse ScrollWheel") == 0) { scrollVector = new Vector3(0, 0, 0); }
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0) { scrollVector = new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * -scrollSpeed * down_scroll_enabled, CameraTilt / 100 * down_scroll_enabled); }
         else if (Input.GetAxis("Mouse ScrollWheel") == 0) { scrollVector = new Vector3(0, 0, 0); }
 
-        //ÏÅĞÅÌÅÙÅÍÈÅ ÊÀÌÅĞÛ
+        //ÃÃ…ÃÃ…ÃŒÃ…Ã™Ã…ÃÃˆÃ… ÃŠÃ€ÃŒÃ…ÃÃ›
         moveVector = new Vector3(moveSpeed * DirectionChosen.hov_x, 0, moveSpeed * DirectionChosen.hov_z);
         tiltVector = new Vector3(CameraTilt, 0, 0);
 
 
-        if (!Input.anyKey) // ıòî ïğîâåğêà íà êëàâèøè, ìîë íàæàòà õîòÿ-áû îäíà êëàâèøà
+        if (!Input.anyKey) // Ã½Ã²Ã® Ã¯Ã°Ã®Ã¢Ã¥Ã°ÃªÃ  Ã­Ã  ÃªÃ«Ã Ã¢Ã¨Ã¸Ã¨, Ã¬Ã®Ã« Ã­Ã Ã¦Ã Ã²Ã  ÃµÃ®Ã²Ã¿-Ã¡Ã» Ã®Ã¤Ã­Ã  ÃªÃ«Ã Ã¢Ã¨Ã¸Ã 
         {
             Vector3 mousePosition = Input.mousePosition;
 
