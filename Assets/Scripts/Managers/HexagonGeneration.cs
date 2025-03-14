@@ -1,178 +1,337 @@
-using System.Collections;
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using UnityEngine;
 
 public class HexagonGeneration : MonoBehaviour
 {
-    public GameObject[] prefab_hexagon, prefab_stone, prefab_mountain; // Префабы для генерации
-    public int layers = 1; // Количество слоев
-    public GameObject parentObject; // Родитель для шестиугольников
-    private HashSet<GameObject> prefab_hexagon_instantiate = new HashSet<GameObject>(); // Созданные объекты
-    private HashSet<Vector3> occupiedPositions = new HashSet<Vector3>(); // Занятые позиции
-    private int random_seed, random_seed_stone, random_seed_mountain;
+    public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs;
+    public GameObject parent;
+    public static int layers = 10;
+    public int maxMountains, maxRifts;
+
+    private static List<GameObject> hexagons = new List<GameObject>();
+    private List<GameObject> blockedHexes = new List<GameObject>();
+    private HashSet<Vector3> occupiedPos = new HashSet<Vector3>();
+    private int seed;
+    private int mountainCount;
+    private float nearRadius = 1f;
+    private float farRadius = 2f;
+
+    private List<GameObject> nearNeighbors = new List<GameObject>();
+    private List<GameObject> farNeighbors = new List<GameObject>();
+
+    private const float nearHeightReduction = 1f;
+    private const float farHeightReduction = 2f;
+
+    private const float riftMin = -2.0f;
+    private const float riftMax = -1.5f;
+    private const float mountainMin = 3.0f;
+    private const float mountainMax = 4.0f;
+    private const float defaultMin = 0.5f;
+    private const float defaultMax = 0.8f;
+
     void Start()
     {
-        if (prefab_hexagon == null || prefab_hexagon.Length == 0)
-        {
-            Debug.LogError("Нет префабов!");
-            return;
-        }
+        if(MenuManager.difficulty == 0) { maxMountains = 3; maxRifts = 1; }
+        else if (MenuManager.difficulty == 1) { maxMountains = 5; maxRifts = 3; }
+        else if (MenuManager.difficulty == 2) { maxMountains = 7; maxRifts = 4; }
 
-        random_seed = Random.Range(0, prefab_hexagon.Length);
+        seed = Random.Range(0, hexPrefabs.Length - 1);
 
-        GameObject centralHexagon = Instantiate(prefab_hexagon[random_seed], Vector3.zero, Quaternion.identity);
-        centralHexagon.transform.SetParent(parentObject.transform);
-        if (centralHexagon == null)
-        {
-            Debug.LogError("Не создана центральная сота!");
-            return;
-        }
+        GameObject centerHex = Instantiate(hexPrefabs[seed], Vector3.zero, Quaternion.identity);
+        centerHex.transform.SetParent(parent.transform);
 
-        occupiedPositions.Add(Vector3.zero);
-        prefab_hexagon_instantiate.Add(centralHexagon);
+        occupiedPos.Add(Vector3.zero);
+        hexagons.Add(centerHex);
 
         GenerateLayers();
-        foreach (Transform child in transform)
+        SpawnMountains();
+        CreateStones();
+        
+        for (int rift = 0; rift <= maxRifts; rift++) //РЎРѕР·РґР°РЅРёРµ РЅРµСЃРєРѕР»СЊРєРёС… СЂР°Р·Р»РѕРјРѕРІ
         {
-            if (child.name.Contains("HexagonRift"))
-            {
-                int random_seed_rotation = Random.Range(0, 6);
-                int[] rotation = { 60, 120, 180, 240, 300, 360 };
-                child.localRotation = Quaternion.Euler(child.transform.rotation.x, child.transform.rotation.y, rotation[random_seed_rotation]);
-
-            }
+            CreateRift();                           
         }
-        parentObject.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
-        //foreach (Transform child in transform)
-        //{
-        //    if (child.name.Contains("HexagonRift"))
-        //    {
-        //        int random_seed_rotation = Random.Range(0, 6);
-        //        int[] rotation = { 30, 90, 150, 210, 270, 330 };
-        //        child.localRotation = Quaternion.Euler(0, 0, rotation[random_seed_rotation]);
-        //    }
-        //}
 
-        // Изменение высоты всех сот после генерации
-        RandomizehexagonHeight();
+        parent.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+
+        RandomizeHeights();
     }
 
     void GenerateLayers()
     {
         for (int layer = 0; layer < layers; layer++)
         {
-            List<GameObject> newHexagons = new List<GameObject>();
+            List<GameObject> newHexes = new List<GameObject>();
 
-            foreach (var sot in prefab_hexagon_instantiate)
+            foreach (var hex in hexagons)
             {
-                if (sot != null)
+                if (hex != null)
                 {
-                    spawnPrefabs(sot, newHexagons);
+                    SpawnHexes(hex, newHexes);
                 }
             }
 
-            prefab_hexagon_instantiate.Clear();
-            prefab_hexagon_instantiate.UnionWith(newHexagons);
+            hexagons.AddRange(newHexes);
         }
     }
 
-    void spawnPrefabs(GameObject centralHexagon, List<GameObject> newHexagons)
+    void SpawnHexes(GameObject centerHex, List<GameObject> newHexes)
     {
-        if (centralHexagon == null) return;
-
-        Transform centralTransform = centralHexagon.transform;
-        int mountain_is_spawn = 0; // 0 - нет ни камня, ни горы | 1 - есть камень | 2 - есть гора
-        foreach (Transform child in centralTransform)
+        foreach (Transform child in centerHex.transform)
         {
-            random_seed_stone = Random.Range(0,10); // генерируем вероятность для спауна камней
-            
-            if (child.name.Contains("stone_position") && ( mountain_is_spawn == 0  || mountain_is_spawn == 1))
+            if (IsOccupied(child.position))
             {
-                if (random_seed_stone >= 3)
-                {
-                    int random_seed_rotation_x = Random.Range(0, 6);
-                    int random_seed_rotation_y = Random.Range(0, 6);
-                    int random_seed_rotation_z = Random.Range(0, 6);
-
-                    int[] rotation = { 30, 90, 150, 210, 270, 330 };
-                    mountain_is_spawn = 1;
-                    random_seed_stone = Random.Range(0, prefab_hexagon.Length);
-                    GameObject spawnedObjectStone = Instantiate(prefab_stone[random_seed_stone], child.position, Quaternion.identity);
-                    spawnedObjectStone.transform.SetParent(child.transform);
-                    spawnedObjectStone.transform.rotation = Quaternion.Euler(rotation[random_seed_rotation_x], rotation[random_seed_rotation_y], rotation[random_seed_rotation_z]);
-
-                    Debug.Log("Создан камень на координатах:" + spawnedObjectStone.transform.position);
-                }
+                Hexagon_position logic = child.GetComponent<Hexagon_position>();
+                logic.Activate();
+                continue;
             }
-            else if (child.name.Contains("mountain_position") && random_seed_stone<2 && (mountain_is_spawn == 0 || mountain_is_spawn == 2))
+            else if (child.name.Contains("hexagon_position"))
             {
-                mountain_is_spawn = 2;
-                random_seed_mountain = Random.Range(0, prefab_mountain.Length);
-                GameObject spawnedObjectmountain = Instantiate(prefab_mountain[random_seed_mountain], child.position, Quaternion.identity);
-                spawnedObjectmountain.transform.SetParent(child.transform);
-                Debug.Log("Создан камень на координатах:" + spawnedObjectmountain.transform.position);
-            }
-            else
-            {
-                
-                if (IsPositionOccupied(child.position))
-                {
-                    Debug.LogWarning($"Позиция занята: {child.position}");
-                    continue;
-                }
-                else if (child.name.Contains("hexagon_position"))
-                {
-                    occupiedPositions.Add(child.position);
-                    
-                    random_seed = Random.Range(0, prefab_hexagon.Length);
-                    if (prefab_hexagon[random_seed].name.Contains("HexagonRift"))
-                    {
-                        random_seed = Random.Range(0, prefab_hexagon.Length);
-                    }
-                    GameObject spawnedObjectHexagon = Instantiate(prefab_hexagon[random_seed], child.position, Quaternion.identity);
-                    spawnedObjectHexagon.transform.SetParent(parentObject.transform);
+                occupiedPos.Add(child.position);
 
-                    //if (spawnedObjectHexagon.name.Contains("HexagonRift"))
-                    //{
-                    //    int random_seed_rotation = Random.Range(0, 6);
-                    //    int[] rotation = { 30, 90, 150, 210, 270, 330 };
-                    //    spawnedObjectHexagon.transform.rotation = Quaternion.Euler(spawnedObjectHexagon.transform.rotation.x,spawnedObjectHexagon.transform.rotation.y, rotation[random_seed_rotation]);
-                    //}
-                    if (spawnedObjectHexagon != null)
-                    {
-                        newHexagons.Add(spawnedObjectHexagon);
+                seed = Random.Range(0, hexPrefabs.Length - 1);
+                GameObject newHex = Instantiate(hexPrefabs[seed], child.position, Quaternion.identity);
+                newHex.transform.SetParent(parent.transform);
+                if (newHex != null)
+                {
+                    newHexes.Add(newHex);
 
-                        Hexagon_position logic = child.GetComponent<Hexagon_position>();
-                        if (logic != null) logic.hexagon_activate();
-                        else Debug.LogError("Нет компонента hexagon_position_logic!");
-                    }
+                    Hexagon_position logic = child.GetComponent<Hexagon_position>();
+                    logic.Activate();
                 }
             }
         }
     }
 
-    bool IsPositionOccupied(Vector3 position) // он нажна, потому что надо ;)
+    bool IsOccupied(Vector3 pos)
     {
-        foreach (var pos in occupiedPositions)
+        foreach (var p in occupiedPos)
         {
-            if (Vector3.Distance(position, pos) < 0.001f) return true;
+            if (Vector3.Distance(pos, p) < 0.001f) return true;
         }
         return false;
     }
 
-    void RandomizehexagonHeight()
+    void RandomizeHeights()
     {
-        // Перебираем все дочерние объекты родителя
-        for (int i = 0; i < parentObject.transform.childCount; i++)
+        for (int i = 0; i < parent.transform.childCount; i++)
         {
-            GameObject hexagon = parentObject.transform.GetChild(i).gameObject;
-            float randomHeight = Random.Range(-1, 0.5f); // Случайное значение высоты
-            float randomHeightTime = Random.Range(-randomHeight, randomHeight);
-            hexagon.transform.position = new Vector3(
-                hexagon.transform.position.x,
-                hexagon.transform.position.y + randomHeightTime, // Изменяем высоту (ось Y)
-                hexagon.transform.position.z
-            );
+            GameObject hex = parent.transform.GetChild(i).gameObject;
+            HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
+
+            if (landscape.mountain)
+            {
+                hex.transform.position = new Vector3(hex.transform.position.x, Random.Range(mountainMin, mountainMax), hex.transform.position.z);
+            }
+            else if (landscape.rift)
+            {
+                hex.transform.position = new Vector3(hex.transform.position.x, Random.Range(riftMin, riftMax), hex.transform.position.z);
+            }
+            else if (nearNeighbors.Contains(hex))
+            {
+                float height = Random.Range(mountainMin - nearHeightReduction, mountainMax - nearHeightReduction);
+                height = Mathf.Max(height, defaultMin);
+                hex.transform.position = new Vector3(hex.transform.position.x, height, hex.transform.position.z);
+            }
+            else if (farNeighbors.Contains(hex))
+            {
+                float height = Random.Range(mountainMin - farHeightReduction, mountainMax - farHeightReduction);
+                height = Mathf.Max(height, defaultMin);
+                hex.transform.position = new Vector3(hex.transform.position.x, height, hex.transform.position.z);
+            }
+            else
+            {
+                hex.transform.position = new Vector3(hex.transform.position.x, Random.Range(defaultMin, defaultMax), hex.transform.position.z);
+            }
+        }
+    }
+
+    void CreateRift()
+    {
+        GameObject startHex = hexagons[Random.Range(0, hexagons.Count)];
+        HexagonLandscape startLandscape = startHex.GetComponent<HexagonLandscape>();
+        if (startLandscape != null && startLandscape.mountain) { return; }
+
+        ReplaceWithRift(startHex);
+
+        int steps = 75;
+        GameObject currentHex = startHex;
+
+        for (int step = 0; step < steps; step++)
+        {
+            GameObject nextHex = GetNeighbor(currentHex);
+            if (nextHex == null)
+            {
+                break;
+            }
+
+            ReplaceWithRift(nextHex);
+            currentHex = nextHex;
+        }
+    }
+
+    GameObject GetNeighbor(GameObject hex)
+    {
+        Collider[] colliders = Physics.OverlapSphere(hex.transform.position, nearRadius);
+        List<GameObject> neighbors = new List<GameObject>();
+
+        foreach (var collider in colliders)
+        {
+            GameObject neighbor = collider.gameObject;
+            if (neighbor.name.Contains("Hexagon") && !neighbor.name.Contains("HexagonRift") && !blockedHexes.Contains(neighbor))
+            {
+                HexagonLandscape landscape = neighbor.GetComponent<HexagonLandscape>();
+
+                if (landscape == null || (!landscape.mountain && !HasMountain(neighbor)))
+                {
+                    neighbors.Add(neighbor);
+                }
+            }
+        }
+
+        if (neighbors.Count > 0)
+        {
+            return neighbors[Random.Range(0, neighbors.Count)];
+        }
+
+        return null;
+    }
+
+    void ReplaceWithRift(GameObject hex)
+    {
+        if (HasMountain(hex))
+        {
+            return;
+        }
+
+        hexagons.Remove(hex);
+        Destroy(hex);
+        GameObject riftHex = Instantiate(hexPrefabs[2], hex.transform.position, Quaternion.identity);
+        riftHex.transform.SetParent(parent.transform);
+        HexagonLandscape landscape = riftHex.GetComponent<HexagonLandscape>();
+        landscape.ActivateRift();
+        hexagons.Add(riftHex);
+        BlockHexes(riftHex);
+    }
+
+    void BlockHexes(GameObject riftHex)
+    {
+        Collider[] colliders = Physics.OverlapSphere(riftHex.transform.position, nearRadius);
+        foreach (var collider in colliders)
+        {
+            GameObject neighbor = collider.gameObject;
+            if (neighbor.name.Contains("Hexagon") && !neighbor.name.Contains("HexagonRift"))
+            {
+                int riftCount = CountRifts(neighbor);
+
+                if (riftCount > 3 && !blockedHexes.Contains(neighbor))
+                {
+                    blockedHexes.Add(neighbor);
+                }
+            }
+        }
+    }
+
+    int CountRifts(GameObject hex)
+    {
+        int count = 0;
+        Collider[] colliders = Physics.OverlapSphere(hex.transform.position, nearRadius);
+        foreach (var collider in colliders) { if (collider.gameObject.name.Contains("HexagonRift")) { count++; } }
+        return count;
+    }
+
+    void CreateStones()
+    {
+        foreach (var hex in hexagons)
+        {
+            bool hasMountain = HasMountain(hex);
+            HexagonLandscape mountain = hex.GetComponent<HexagonLandscape>();
+            foreach (Transform child in hex.transform)
+            {
+                if (child.name.Contains("stone_position") && !mountain.mountain)
+                {
+                    int chance = hasMountain ? 60 : 30;
+
+                    if (Random.Range(0, 100) < chance)
+                    {
+                        int rotX = Random.Range(0, 6);
+                        int rotY = Random.Range(0, 6);
+                        int rotZ = Random.Range(0, 6);
+                        int[] rotations = { 30, 90, 150, 210, 270, 330 };
+                        int stoneIndex = Random.Range(0, stonePrefabs.Length);
+
+                        GameObject stone = Instantiate(stonePrefabs[stoneIndex], child.position, Quaternion.identity);
+                        stone.transform.SetParent(child.transform);
+                        stone.transform.rotation = Quaternion.Euler(rotations[rotX], rotations[rotY], rotations[rotZ]);
+                    }
+                }
+            }
+        }
+    }
+
+    bool HasMountain(GameObject hex)
+    {
+        Collider[] colliders = Physics.OverlapSphere(hex.transform.position, nearRadius);
+
+        foreach (var collider in colliders)
+        {
+            HexagonLandscape landscape = collider.gameObject.GetComponent<HexagonLandscape>();
+            if (landscape != null && landscape.mountain)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void SpawnMountains()
+    {
+        foreach (var hex in hexagons)
+        {
+            HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
+            if (landscape == null) continue;
+
+            foreach (Transform child in hex.transform)
+            {
+                if (child.name.Contains("mountain_position") && Random.Range(0, 50) <= 2)
+                {
+                    if (maxMountains > mountainCount)
+                    {
+                        GameObject mountain = Instantiate(mountainPrefabs[Random.Range(0, mountainPrefabs.Length)], child.position, Quaternion.identity);
+                        mountain.transform.SetParent(child.transform);
+                        mountainCount += 1;
+
+                        landscape.ActivateMountain();
+
+                        Collider[] nearColliders = Physics.OverlapSphere(mountain.transform.position, nearRadius);
+                        foreach (var collider in nearColliders)
+                        {
+                            GameObject neighbor = collider.gameObject;
+                            HexagonLandscape neighborLandscape = neighbor.GetComponent<HexagonLandscape>();
+
+                            if (neighborLandscape != null && !neighborLandscape.mountain && !nearNeighbors.Contains(neighbor))
+                            {
+                                nearNeighbors.Add(neighbor);
+                            }
+                        }
+
+                        Collider[] farColliders = Physics.OverlapSphere(mountain.transform.position, farRadius);
+                        foreach (var collider in farColliders)
+                        {
+                            GameObject neighbor = collider.gameObject;
+                            HexagonLandscape neighborLandscape = neighbor.GetComponent<HexagonLandscape>();
+
+                            if (neighborLandscape != null && !neighborLandscape.mountain && !nearNeighbors.Contains(neighbor) && !farNeighbors.Contains(neighbor))
+                            {
+                                farNeighbors.Add(neighbor);
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
         }
     }
 }

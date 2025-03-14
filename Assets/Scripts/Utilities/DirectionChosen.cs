@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class DirectionChosen : MonoBehaviour
 {
-    public static float hov_x = 0f, hov_y = 0f;
-    public static float hov_x_cap_up = 1f, hov_y_cap_up = 1f, hov_x_cap_down = -1f, hov_y_cap_down = -1f, acceleration = 0.1f;
+    public static float hov_x = 0f, hov_z = 0f;
+    public static float hov_x_cap_up = 1f, hov_z_cap_up = 1f, hov_x_cap_down = -1f, hov_z_cap_down = -1f, acceleration = 0.1f;
 
     public void UpHover_Chosen()
     {
-        while (hov_y < hov_y_cap_up) { hov_y += acceleration; }    
+        while (hov_z < hov_z_cap_up) { hov_z += acceleration; }    
     }
     public void DownHover_Chosen()
     {
-        while (hov_y > hov_y_cap_down) { hov_y -= acceleration; }
+        while (hov_z > hov_z_cap_down) { hov_z -= acceleration; }
     }
     public void RightHover_Chosen()
     {
@@ -25,7 +25,7 @@ public class DirectionChosen : MonoBehaviour
     public void Dir_UnChosen()
     {
         hov_x = 0f;
-        hov_y = 0f;
+        hov_z = 0f;
     }
 
 }
