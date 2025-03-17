@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HexagonGeneration : MonoBehaviour
 {
-    public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs;
+    public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs, puzzleList;
     public GameObject parent;
     public static int layers = 10;
     public int maxMountains, maxRifts;
@@ -46,7 +48,7 @@ public class HexagonGeneration : MonoBehaviour
         GenerateLayers();
         SpawnMountains();
         CreateStones();
-        
+        blockedHexes.AddRange(hexagons.Take(7)); //добавляем центральные hexagon в заблокированные, чтобы исключить спаун rift в центре 
         for (int rift = 0; rift <= maxRifts; rift++) //Создание нескольких разломов
         {
             CreateRift();                           
@@ -55,8 +57,39 @@ public class HexagonGeneration : MonoBehaviour
         parent.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
 
         RandomizeHeights();
+        GenerateName();
     }
+    void GenerateName()
+    {
+        int riftCounter = 1;
+        int mountainCounter = 1;
+        int defaultCounter = 1;
 
+        foreach (var hex in hexagons)
+        {
+
+            HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
+
+            if (landscape != null)
+            {
+                if (landscape.rift)
+                {
+                    hex.name = $"HexagonRift_{riftCounter}";
+                    riftCounter++; 
+                }
+                else if (landscape.mountain)
+                {
+                    hex.name = $"HexagonMountain_{mountainCounter}";
+                    mountainCounter++; 
+                }
+                else
+                {
+                    hex.name = $"HexagonDefault_{defaultCounter}";
+                    defaultCounter++;
+                }
+            }
+        }
+    }
     void GenerateLayers()
     {
         for (int layer = 0; layer < layers; layer++)
@@ -250,19 +283,27 @@ public class HexagonGeneration : MonoBehaviour
             {
                 if (child.name.Contains("stone_position") && !mountain.mountain)
                 {
-                    int chance = hasMountain ? 60 : 30;
-
-                    if (Random.Range(0, 100) < chance)
+                    int chance = hasMountain ? 60 : 20;
+                    if (Random.Range(0, 500) <= 1)//спаун жорика
                     {
-                        int rotX = Random.Range(0, 6);
-                        int rotY = Random.Range(0, 6);
-                        int rotZ = Random.Range(0, 6);
-                        int[] rotations = { 30, 90, 150, 210, 270, 330 };
-                        int stoneIndex = Random.Range(0, stonePrefabs.Length);
+                        GameObject jorik = Instantiate(puzzleList[0], child.position, Quaternion.identity);
+                        jorik.transform.SetParent(child.transform);
+                        Debug.Log("ЭТО ЖОРИКККК!!!!!");
+                    }
+                    else
+                    {
+                        if (Random.Range(0, 100) < chance)
+                        {
+                            int rotX = Random.Range(0, 6);
+                            int rotY = Random.Range(0, 6);
+                            int rotZ = Random.Range(0, 6);
+                            int[] rotations = { 30, 90, 150, 210, 270, 330 };
+                            int stoneIndex = Random.Range(0, stonePrefabs.Length);
 
-                        GameObject stone = Instantiate(stonePrefabs[stoneIndex], child.position, Quaternion.identity);
-                        stone.transform.SetParent(child.transform);
-                        stone.transform.rotation = Quaternion.Euler(rotations[rotX], rotations[rotY], rotations[rotZ]);
+                            GameObject stone = Instantiate(stonePrefabs[stoneIndex], child.position, Quaternion.identity);
+                            stone.transform.SetParent(child.transform);
+                            stone.transform.rotation = Quaternion.Euler(rotations[rotX], rotations[rotY], rotations[rotZ]);
+                        }
                     }
                 }
             }
@@ -287,10 +328,16 @@ public class HexagonGeneration : MonoBehaviour
 
     void SpawnMountains()
     {
+
+        float minDistanceForMountains = 8.0f; 
+
         foreach (var hex in hexagons)
         {
             HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
             if (landscape == null) continue;
+            float distanceFromCenter = Vector3.Distance(hex.transform.position, Vector3.zero);
+
+            if (distanceFromCenter < minDistanceForMountains) continue;
 
             foreach (Transform child in hex.transform)
             {
