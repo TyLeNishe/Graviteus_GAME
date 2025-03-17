@@ -69,12 +69,12 @@ public class CameraHovering : MonoBehaviour
         {
             Vector3 mousePosition = Input.mousePosition;
 
-            if (mousePosition[0] >= Screen.width * 0.8f) { DirectionChosen.hov_x = 1 * east_scroll_enabled; }
-            else if (mousePosition[0] <= Screen.width * 0.2f) { DirectionChosen.hov_x = -1 * west_scroll_enabled; }
+            if (mousePosition[0] >= Screen.width * 0.9f) { DirectionChosen.hov_x = 1 * east_scroll_enabled; }
+            else if (mousePosition[0] <= Screen.width * 0.1f) { DirectionChosen.hov_x = -1 * west_scroll_enabled; }
             else { DirectionChosen.hov_x = 0; }
 
-            if (mousePosition[1] >= Screen.height * 0.8f) { DirectionChosen.hov_z = 1 * north_scroll_enabled; }
-            else if (mousePosition[1] <= Screen.height * 0.2f) { DirectionChosen.hov_z = -1 * south_scroll_enabled; }
+            if (mousePosition[1] >= Screen.height * 0.95f) { DirectionChosen.hov_z = 1 * north_scroll_enabled; }
+            else if (mousePosition[1] <= Screen.height * 0.1f) { DirectionChosen.hov_z = -1 * south_scroll_enabled; }
             else { DirectionChosen.hov_z = 0; }
         }
 
