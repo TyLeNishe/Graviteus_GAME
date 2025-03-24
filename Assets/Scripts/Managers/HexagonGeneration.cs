@@ -46,11 +46,11 @@ public class HexagonGeneration : MonoBehaviour
 
         GenerateLayers();
         SpawnMountains();
-        /*
+        
         CreateMeteorite();
         CreateFireoilPool();
         CreateToxideGeyser();
-        */
+        
         CreateStones();
         
         blockedHexes.AddRange(hexagons.Take(7)); //добавляем центральные hexagon в заблокированные, чтобы исключить спаун rift в центре 
@@ -399,7 +399,7 @@ public class HexagonGeneration : MonoBehaviour
 
             foreach (Transform child in hex.transform)
             {
-                if (child.name.Contains("meteorite_position") && Random.Range(0, 50) <= 2) 
+                if (child.name.Contains("meteorite_position") && Random.Range(0, 50) <= 10 && landscape.IsDefault()) 
                 {
                     if (maxMeteorite > meteoriteCount)
                     {
@@ -431,7 +431,7 @@ public class HexagonGeneration : MonoBehaviour
 
             foreach (Transform child in hex.transform)
             {
-                if (child.name.Contains("fireoil_position") && Random.Range(0, 50) <= 2) 
+                if (child.name.Contains("fireoilpool_position") && Random.Range(0, 50) <= 10 && landscape.IsDefault()) 
                 {
                     if (maxFireoilPool > fireoilCount)
                     {
@@ -463,7 +463,7 @@ public class HexagonGeneration : MonoBehaviour
 
             foreach (Transform child in hex.transform)
             {
-                if (child.name.Contains("geyser_position") && Random.Range(0, 50) <= 2) 
+                if (child.name.Contains("geyser_position") && Random.Range(0, 50) <= 10 && landscape.IsDefault()) 
                 {
                     if (maxGeyser > geyserCount)
                     {
