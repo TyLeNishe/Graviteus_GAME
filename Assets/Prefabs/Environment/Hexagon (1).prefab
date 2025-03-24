@@ -478,9 +478,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 8508de4ac746d5046b87c72eb0ecc99e, type: 2}
+    - target: {fileID: -7511558181221131132, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 19e09011b9378b14f8d5ba87ec651e69, type: 2}
     - target: {fileID: 919132149155446097, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
       propertyPath: m_Name
       value: Hexagon (1)
@@ -532,6 +540,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5673660711031769717}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1290208008240287506}
   m_SourcePrefab: {fileID: 100100000, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
 --- !u!4 &4003614004632123292 stripped
 Transform:
@@ -579,3 +590,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mountain: 0
   rift: 0
+--- !u!114 &-1290208008240287506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378731481494727974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4df5e3d3571f844386bf2e5b608babf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

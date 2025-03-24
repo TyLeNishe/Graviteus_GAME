@@ -447,9 +447,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 1c984f37fdc53f648a3a3349b4e5ff66, type: 2}
+    - target: {fileID: -7511558181221131132, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 19e09011b9378b14f8d5ba87ec651e69, type: 2}
     - target: {fileID: 919132149155446097, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
       propertyPath: m_Name
       value: HexagonRift(1)

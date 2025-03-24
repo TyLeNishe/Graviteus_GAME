@@ -5,16 +5,15 @@ using UnityEngine;
 
 public class HexagonGeneration : MonoBehaviour
 {
-    public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs, puzzleList;
+    public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs, puzzleList, meteoritePrefabs, fireoilpoolPrefabs, geyserPrefabs;
     public GameObject parent;
     public static int layers = 10;
-    public int maxMountains, maxRifts;
-
+    public int maxMountains, maxRifts, maxMeteorite, maxFireoilPool, maxGeyser;
     private static List<GameObject> hexagons = new List<GameObject>();
     private List<GameObject> blockedHexes = new List<GameObject>();
     private HashSet<Vector3> occupiedPos = new HashSet<Vector3>();
     private int seed;
-    private int mountainCount;
+    private int mountainCount, geyserCount, fireoilCount, meteoriteCount;
     private float nearRadius = 1f;
     private float farRadius = 2f;
 
@@ -47,7 +46,13 @@ public class HexagonGeneration : MonoBehaviour
 
         GenerateLayers();
         SpawnMountains();
+        /*
+        CreateMeteorite();
+        CreateFireoilPool();
+        CreateToxideGeyser();
+        */
         CreateStones();
+        
         blockedHexes.AddRange(hexagons.Take(7)); //добавляем центральные hexagon в заблокированные, чтобы исключить спаун rift в центре 
         for (int rift = 0; rift <= maxRifts; rift++) //Создание нескольких разломов
         {
@@ -187,7 +192,7 @@ public class HexagonGeneration : MonoBehaviour
 
         ReplaceWithRift(startHex);
 
-        int steps = 75;
+        int steps = layers * 10;
         GameObject currentHex = startHex;
 
         for (int step = 0; step < steps; step++)
@@ -281,7 +286,7 @@ public class HexagonGeneration : MonoBehaviour
             HexagonLandscape mountain = hex.GetComponent<HexagonLandscape>();
             foreach (Transform child in hex.transform)
             {
-                if (child.name.Contains("stone_position") && !mountain.mountain)
+                if (child.name.Contains("stone_position") && mountain.IsDefault())
                 {
                     int chance = hasMountain ? 60 : 20;
                     if (Random.Range(0, 500) <= 1)//спаун жорика
@@ -374,7 +379,101 @@ public class HexagonGeneration : MonoBehaviour
                                 farNeighbors.Add(neighbor);
                             }
                         }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    void CreateMeteorite()
+    {
+        float minDistanceForMeteorite = 8.0f; 
 
+        foreach (var hex in hexagons)
+        {
+            HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
+            if (landscape == null) continue;
+
+            float distanceFromCenter = Vector3.Distance(hex.transform.position, Vector3.zero);
+            if (distanceFromCenter < minDistanceForMeteorite) continue;
+
+            foreach (Transform child in hex.transform)
+            {
+                if (child.name.Contains("meteorite_position") && Random.Range(0, 50) <= 2) 
+                {
+                    if (maxMeteorite > meteoriteCount)
+                    {
+                        meteoriteCount++;
+                        landscape.ActivateMeteorite();
+                        GameObject Meteorite = Instantiate(meteoritePrefabs[Random.Range(0, meteoritePrefabs.Length)], child.position, Quaternion.identity);
+                        Meteorite.transform.SetParent(child.transform);
+
+                        HexagonProfile profile = hex.GetComponent<HexagonProfile>();
+                        profile.Obscurrium = 50;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    void CreateFireoilPool()
+    {
+        float minDistanceForFireoil = 8.0f;
+
+        foreach (var hex in hexagons)
+        {
+            HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
+            if (landscape == null) continue;
+
+            float distanceFromCenter = Vector3.Distance(hex.transform.position, Vector3.zero);
+            if (distanceFromCenter < minDistanceForFireoil) continue;
+
+            foreach (Transform child in hex.transform)
+            {
+                if (child.name.Contains("fireoil_position") && Random.Range(0, 50) <= 2) 
+                {
+                    if (maxFireoilPool > fireoilCount)
+                    {
+                        fireoilCount++;
+                        landscape.ActivateFireoilPool();
+                        GameObject Fireoil = Instantiate(fireoilpoolPrefabs[Random.Range(0, fireoilpoolPrefabs.Length)], child.position, Quaternion.identity);
+                        Fireoil.transform.SetParent(child.transform);
+
+                        HexagonProfile profile = hex.GetComponent<HexagonProfile>();
+                        profile.Ignoleum = 50;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    void CreateToxideGeyser()
+    {
+        float minDistanceForGeyser = 8.0f;
+
+        foreach (var hex in hexagons)
+        {
+            HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
+            if (landscape == null) continue;
+
+            float distanceFromCenter = Vector3.Distance(hex.transform.position, Vector3.zero);
+            if (distanceFromCenter < minDistanceForGeyser) continue;
+
+            foreach (Transform child in hex.transform)
+            {
+                if (child.name.Contains("geyser_position") && Random.Range(0, 50) <= 2) 
+                {
+                    if (maxGeyser > geyserCount)
+                    {
+                        geyserCount++;
+                        landscape.ActivateGeyser();
+                        GameObject Geyser = Instantiate(geyserPrefabs[Random.Range(0, geyserPrefabs.Length)], child.position, Quaternion.identity);
+                        Geyser.transform.SetParent(child.transform);
+
+                        HexagonProfile profile = hex.GetComponent<HexagonProfile>();
+                        profile.Venesum = 50;
                         break;
                     }
                 }
