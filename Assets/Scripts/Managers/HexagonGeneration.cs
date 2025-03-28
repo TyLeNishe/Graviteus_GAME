@@ -31,6 +31,9 @@ public class HexagonGeneration : MonoBehaviour
     private const float defaultMin = 0.5f;
     private const float defaultMax = 0.8f;
 
+    private const float MaxDifferenceHeight = 0.5f;
+    private const float MinDifferenceHeight = 0.1f;
+
     void Start()
     {
         if(MenuManager.difficulty == 0) { maxMountains = 3; maxRifts = 1; }
@@ -48,6 +51,7 @@ public class HexagonGeneration : MonoBehaviour
         GenerateLayers();
         SpawnMountains();
         CreateStones();
+        
         blockedHexes.AddRange(hexagons.Take(7)); //добавляем центральные hexagon в заблокированные, чтобы исключить спаун rift в центре 
         for (int rift = 0; rift <= maxRifts; rift++) //Создание нескольких разломов
         {
@@ -55,7 +59,7 @@ public class HexagonGeneration : MonoBehaviour
         }
 
         parent.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
-
+        GenerateResources(hexagons);
         RandomizeHeights();
         GenerateName();
     }
@@ -136,6 +140,20 @@ public class HexagonGeneration : MonoBehaviour
         }
     }
 
+    void GenerateResources(List<GameObject> hexagons)
+    {
+        foreach (var hex in hexagons)
+        {
+            HexagonResources Resources = hex.GetComponent<HexagonResources>();
+            if ((Resources.pollution == -1) && (Resources.ResourcesFertility == -1) && (hex.GetComponent<HexagonLandscape>().rift == false)) continue;
+
+            foreach (Transform child in hex.transform)
+            {
+                Resources.ActivateResources();
+            }
+        }
+    }
+
     bool IsOccupied(Vector3 pos)
     {
         foreach (var p in occupiedPos)
@@ -175,6 +193,29 @@ public class HexagonGeneration : MonoBehaviour
             else
             {
                 hex.transform.position = new Vector3(hex.transform.position.x, Random.Range(defaultMin, defaultMax), hex.transform.position.z);
+            }
+        }
+    }
+    void ControlFreeHex(GameObject hex)
+    {
+        Collider[] colliders = Physics.OverlapSphere(hex.transform.position, nearRadius);
+        foreach (var collider in colliders)
+        {
+            GameObject neighbour = collider.gameObject;
+            if ((neighbour != hex) && (neighbour.GetComponent<HexagonLandscape>().rift == false))
+            {
+                float neighbourHeight = neighbour.transform.position.y;
+                float hexHeight = hex.transform.position.y;
+                float heightDifference = Mathf.Abs(hexHeight - neighbourHeight);
+                if (heightDifference < MaxDifferenceHeight || heightDifference > MaxDifferenceHeight)
+                {
+                    float newHeight = hexHeight + Random.Range(-MaxDifferenceHeight, MaxDifferenceHeight);
+                    neighbour.transform.position = new Vector3(
+                    neighbour.transform.position.x,
+                    newHeight,
+                    neighbour.transform.position.z
+                    );
+                }
             }
         }
     }

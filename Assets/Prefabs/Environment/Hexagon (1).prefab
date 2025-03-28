@@ -532,6 +532,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5673660711031769717}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2333738936969294338}
   m_SourcePrefab: {fileID: 100100000, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
 --- !u!4 &4003614004632123292 stripped
 Transform:
@@ -579,3 +582,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mountain: 0
   rift: 0
+--- !u!114 &2333738936969294338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378731481494727974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e7a40b472b741e428c85866832ca6ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pollution: -1
+  ResourcesFertility: -1
