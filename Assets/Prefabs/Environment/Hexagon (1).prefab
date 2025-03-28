@@ -197,6 +197,68 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexagon_position_on_or_off: 0
+--- !u!1 &4924139898600283971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4486683495906125295}
+  m_Layer: 0
+  m_Name: geyser_position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4486683495906125295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4924139898600283971}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.6830127, y: -0.18301277, z: -0.18301277, w: -0.6830127}
+  m_LocalPosition: {x: -0.00023000184, y: 0.000400002, z: 0.010540002}
+  m_LocalScale: {x: 0.01, y: 0.0049999985, z: 0.009999997}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4003614004632123292}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5570023464564548601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5341706004798992697}
+  m_Layer: 0
+  m_Name: meteorite_position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5341706004798992697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5570023464564548601}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.6830127, y: -0.18301277, z: -0.18301277, w: -0.6830127}
+  m_LocalPosition: {x: -0.00023000184, y: 0.000400002, z: 0.010540002}
+  m_LocalScale: {x: 0.01, y: 0.0049999985, z: 0.009999997}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4003614004632123292}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5659647501716164435
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +380,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexagon_position_on_or_off: 0
+--- !u!1 &7381312020030782771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7263417526216652504}
+  m_Layer: 0
+  m_Name: fireoilpool_position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7263417526216652504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7381312020030782771}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.6830127, y: -0.18301277, z: -0.18301277, w: -0.6830127}
+  m_LocalPosition: {x: -0.0016, y: -0.00039000032, z: 0.010540002}
+  m_LocalScale: {x: 0.01, y: 0.0049999985, z: 0.009999997}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4003614004632123292}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7415684434632956439
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,9 +571,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 8508de4ac746d5046b87c72eb0ecc99e, type: 2}
+    - target: {fileID: -7511558181221131132, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 19e09011b9378b14f8d5ba87ec651e69, type: 2}
     - target: {fileID: 919132149155446097, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
       propertyPath: m_Name
       value: Hexagon (1)
@@ -492,6 +593,15 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4486683495906125295}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5341706004798992697}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7263417526216652504}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3713189288137781172}
@@ -534,7 +644,11 @@ PrefabInstance:
       addedObject: {fileID: 5673660711031769717}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
       insertIndex: -1
+<<<<<<< HEAD
       addedObject: {fileID: 2333738936969294338}
+=======
+      addedObject: {fileID: -1290208008240287506}
+>>>>>>> 942e35d6b68c310514582ddc9abe929ca98684d3
   m_SourcePrefab: {fileID: 100100000, guid: d3706a32a3577534da8bf95535bcdf54, type: 3}
 --- !u!4 &4003614004632123292 stripped
 Transform:
@@ -582,7 +696,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mountain: 0
   rift: 0
+<<<<<<< HEAD
 --- !u!114 &2333738936969294338
+=======
+  geyser: 0
+  meteorite: 0
+  fireoilpool: 0
+--- !u!114 &-1290208008240287506
+>>>>>>> 942e35d6b68c310514582ddc9abe929ca98684d3
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -591,8 +712,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4378731481494727974}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< HEAD
   m_Script: {fileID: 11500000, guid: 4e7a40b472b741e428c85866832ca6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pollution: -1
   ResourcesFertility: -1
+=======
+  m_Script: {fileID: 11500000, guid: b4df5e3d3571f844386bf2e5b608babf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Obscurrium: 0
+  Ignoleum: 0
+  Venesum: 0
+  Finibus: 0
+  pollutionLevel: 0
+>>>>>>> 942e35d6b68c310514582ddc9abe929ca98684d3

@@ -2762,9 +2762,15 @@ MonoBehaviour:
   - {fileID: 7897940809637346905, guid: f8b0e5aba02541b41ac7402aad9810bc, type: 3}
   puzzleList:
   - {fileID: 4705902298784241764, guid: 57f358aad91302f438d33ac02c16f47e, type: 3}
+  meteoritePrefabs: []
+  fireoilpoolPrefabs: []
+  geyserPrefabs: []
   parent: {fileID: 1129864305}
   maxMountains: 10
   maxRifts: 0
+  maxMeteorite: 0
+  maxFireoilPool: 0
+  maxGeyser: 0
 --- !u!4 &1129864307
 Transform:
   m_ObjectHideFlags: 0
