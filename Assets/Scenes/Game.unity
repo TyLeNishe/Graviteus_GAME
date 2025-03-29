@@ -279,7 +279,7 @@ MonoBehaviour:
   moveMult: 1
   CameraTilt: 0
   moveSpeed: 0
-  scrollSpeed: 0
+  scrollSpeed: 600
 --- !u!114 &34461661
 MonoBehaviour:
   m_ObjectHideFlags: 0

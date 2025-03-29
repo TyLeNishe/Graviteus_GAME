@@ -9,7 +9,7 @@ public class WorldBorders : MonoBehaviour
     public static float West_Border = -cell_width * HexagonGeneration.layers;
     public static float East_Border = cell_width * HexagonGeneration.layers;
 
-    public static float Upper_Border = 20f;
+    public static float Upper_Border = 24f;
     public static float Bottom_Border = 7f;
 
     public static float CamVelDist_Mult = 1f;

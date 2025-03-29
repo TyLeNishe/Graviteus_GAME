@@ -5,11 +5,11 @@ public class CameraHovering : MonoBehaviour
     public Vector3 moveVector, scrollVector, tiltVector;
     public float moveMult = 1f, CameraTilt;
     public float moveSpeed;
-    public float scrollSpeed = 200f;
+    public float scrollSpeed = 450f;
 
     private Vector3 targetPosition;  // Целевая позиция для плавного перемещения
     private Vector3 targetRotation;  // Целевой угол наклона камеры
-    private float smoothTime = 1.2f; // Время для сглаживания
+    private float smoothTime = 0.6f; // Время для сглаживания
     private Vector3 velocity = Vector3.zero;  // Для расчета скорости сглаживания
 
     void Start()
@@ -35,54 +35,56 @@ public class CameraHovering : MonoBehaviour
         if (CamPos.x >= WorldBorders.East_Border) { east_scroll_enabled = 0; } else { east_scroll_enabled = 1; }
         if (CamPos.x <= WorldBorders.West_Border) { west_scroll_enabled = 0; } else { west_scroll_enabled = 1; }
 
-        if (CamPos.y >= WorldBorders.Upper_Border) { up_scroll_enabled = 0; } else { up_scroll_enabled = 1; }
-        if (CamPos.y <= WorldBorders.Bottom_Border) { down_scroll_enabled = 0; } else { down_scroll_enabled = 1; }
+        if (CamPos.y >= WorldBorders.Upper_Border) { up_scroll_enabled = 0; } 
+        else { up_scroll_enabled = 1; }
+        if (CamPos.y <= WorldBorders.Bottom_Border) { down_scroll_enabled = 0; } 
+        else { down_scroll_enabled = 1; }
 
         if (CamPos.z >= WorldBorders.North_Border) { north_scroll_enabled = 0; } else { north_scroll_enabled = 1; }
         if (CamPos.z <= WorldBorders.South_Border) { south_scroll_enabled = 0; } else { south_scroll_enabled = 1; }
 
         // Формулы скорости и наклона камеры
         moveSpeed = 1.5f * moveMult * WorldBorders.CamVelDist_Mult;
-        CameraTilt = (Mathf.Pow(CamPos.y, 1.9f) / 5);
+        CameraTilt = (Mathf.Pow(CamPos.y, 2.2f) / 17);
 
         // SHIFT
         if (Input.GetKey(KeyCode.LeftShift)) { moveMult = 2; } else { moveMult = 1; }
 
         // WASD движение
-        if (Key_W) { DirectionChosen.hov_z = 1f * north_scroll_enabled; smoothTime = 0.4f; }
-        if (Key_S) { DirectionChosen.hov_z = -1f * south_scroll_enabled; smoothTime = 0.4f; }
-        if (Key_D) { DirectionChosen.hov_x = 1f * east_scroll_enabled; smoothTime = 0.4f; }
-        if (Key_A) { DirectionChosen.hov_x = -1f * west_scroll_enabled; smoothTime = 0.4f; }
+        if (Key_W) { DirectionChosen.hov_z = 1f * north_scroll_enabled; smoothTime = 0.2f; }
+        if (Key_S) { DirectionChosen.hov_z = -1f * south_scroll_enabled; smoothTime = 0.2f; }
+        if (Key_D) { DirectionChosen.hov_x = 1f * east_scroll_enabled; smoothTime = 0.2f; }
+        if (Key_A) { DirectionChosen.hov_x = -1f * west_scroll_enabled; smoothTime = 0.2f; }
 
         // Остановка движения
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S)) { DirectionChosen.hov_z = 0f; smoothTime = 1.2f; }
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) { DirectionChosen.hov_x = 0f; smoothTime = 1.2f; }
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S)) { DirectionChosen.hov_z = 0f; smoothTime = 0.6f; }
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) { DirectionChosen.hov_x = 0f; smoothTime = 0.6f; }
 
         // Скроллинг
-        if (Input.GetAxis("Mouse ScrollWheel") < 0) { scrollVector = new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * -scrollSpeed * up_scroll_enabled, -CameraTilt / 100 * up_scroll_enabled); }
-        else if (Input.GetAxis("Mouse ScrollWheel") == 0) { scrollVector = new Vector3(0, 0, 0); }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0 && up_scroll_enabled == 1) { scrollVector = new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * -scrollSpeed * up_scroll_enabled, -CameraTilt / 100 * up_scroll_enabled); }
+        else if (Input.GetAxis("Mouse ScrollWheel") == 0 && up_scroll_enabled == 1) { scrollVector = new Vector3(0, 0, 0); }
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) { scrollVector = new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * -scrollSpeed * down_scroll_enabled, CameraTilt / 100 * down_scroll_enabled); }
-        else if (Input.GetAxis("Mouse ScrollWheel") == 0) { scrollVector = new Vector3(0, 0, 0); }
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && down_scroll_enabled == 1) { scrollVector = new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * -scrollSpeed * down_scroll_enabled, CameraTilt / 100 * down_scroll_enabled); }
+        else if (Input.GetAxis("Mouse ScrollWheel") == 0 && down_scroll_enabled == 1) { scrollVector = new Vector3(0, 0, 0); }
 
-        if (!Input.anyKey) // это проверка на клавиши, мол нажата хотя-бы одна клавиша
-        {
-            Vector3 mousePosition = Input.mousePosition;
+        //if (!Input.anyKey) // это проверка на клавиши, мол нажата хотя-бы одна клавиша
+        //{
+        //    Vector3 mousePosition = Input.mousePosition;
 
-            if (mousePosition[0] >= Screen.width * 0.8f) { DirectionChosen.hov_x = 1 * east_scroll_enabled; smoothTime = 0.4f; }
-            else if (mousePosition[0] <= Screen.width * 0.2f) { DirectionChosen.hov_x = -1 * west_scroll_enabled; smoothTime = 0.4f; }
-            else { DirectionChosen.hov_x = 0; smoothTime = 1.2f; }
+        //    if (mousePosition[0] >= Screen.width * 0.8f) { DirectionChosen.hov_x = 1 * east_scroll_enabled; smoothTime = 0.4f; }
+        //    else if (mousePosition[0] <= Screen.width * 0.2f) { DirectionChosen.hov_x = -1 * west_scroll_enabled; smoothTime = 0.4f; }
+        //    else { DirectionChosen.hov_x = 0; smoothTime = 1.2f; }
 
-            if (mousePosition[1] >= Screen.height * 0.8f) { DirectionChosen.hov_z = 1 * north_scroll_enabled; smoothTime = 0.4f; }
-            else if (mousePosition[1] <= Screen.height * 0.2f) { DirectionChosen.hov_z = -1 * south_scroll_enabled; smoothTime = 0.4f; }
-            else { DirectionChosen.hov_z = 0; smoothTime = 1.2f; }
+        //    if (mousePosition[1] >= Screen.height * 0.8f) { DirectionChosen.hov_z = 1 * north_scroll_enabled; smoothTime = 0.4f; }
+        //    else if (mousePosition[1] <= Screen.height * 0.2f) { DirectionChosen.hov_z = -1 * south_scroll_enabled; smoothTime = 0.4f; }
+        //    else { DirectionChosen.hov_z = 0; smoothTime = 1.2f; }
 
-        }
+        //}
 
         // Перемещение камеры
-        moveVector = new Vector3(moveSpeed * DirectionChosen.hov_x, 0, moveSpeed * DirectionChosen.hov_z);
+        moveVector = new Vector3(moveSpeed * DirectionChosen.hov_x, (-(up_scroll_enabled - 1) + (down_scroll_enabled - 1)) * -scrollSpeed / 12, moveSpeed * DirectionChosen.hov_z);
 
-        if (smoothTime == 0.4f) { scrollSpeed = 200f; }
+        if (smoothTime == 0.2f) { scrollSpeed = 150f; }
         else { scrollSpeed = 600f; }
 
         // Целевая позиция
