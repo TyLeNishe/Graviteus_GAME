@@ -63,7 +63,7 @@ public class HexagonGeneration : MonoBehaviour
         }
 
         parent.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
-        GenerateResources(hexagons);
+       // GenerateResources(hexagons);
         RandomizeHeights();
         GenerateName();
     }

@@ -2749,8 +2749,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexPrefabs:
-  - {fileID: 132359132345125552, guid: 44c2fab9608347845818a6483f84320b, type: 3}
-  - {fileID: 4378731481494727974, guid: c562a398ef3778c49b70f1408cb5c580, type: 3}
+  - {fileID: 2615073415651948233, guid: 44c2fab9608347845818a6483f84320b, type: 3}
+  - {fileID: 871142831800081275, guid: c562a398ef3778c49b70f1408cb5c580, type: 3}
   - {fileID: 1660794306540380682, guid: a0916ba6eed3b9745807f92652f3824d, type: 3}
   stonePrefabs:
   - {fileID: 3967174937273534490, guid: 547a85e0c7eef3f44b675a30ce4e7a29, type: 3}
@@ -2762,15 +2762,18 @@ MonoBehaviour:
   - {fileID: 7897940809637346905, guid: f8b0e5aba02541b41ac7402aad9810bc, type: 3}
   puzzleList:
   - {fileID: 4705902298784241764, guid: 57f358aad91302f438d33ac02c16f47e, type: 3}
-  meteoritePrefabs: []
-  fireoilpoolPrefabs: []
-  geyserPrefabs: []
+  meteoritePrefabs:
+  - {fileID: 3281685813351521602, guid: cc4c393d8d9544f488751d5a1ac42631, type: 3}
+  fireoilpoolPrefabs:
+  - {fileID: 236679478592812834, guid: fe798a82bf9f25840ba043bc5cf7dfcf, type: 3}
+  geyserPrefabs:
+  - {fileID: 2308394685166807716, guid: 527be16161fc31a4e853c1c01612062a, type: 3}
   parent: {fileID: 1129864305}
   maxMountains: 10
-  maxRifts: 0
-  maxMeteorite: 0
-  maxFireoilPool: 0
-  maxGeyser: 0
+  maxRifts: 2
+  maxMeteorite: 2
+  maxFireoilPool: 2
+  maxGeyser: 2
 --- !u!4 &1129864307
 Transform:
   m_ObjectHideFlags: 0
