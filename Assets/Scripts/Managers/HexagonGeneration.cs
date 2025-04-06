@@ -1,16 +1,26 @@
 ﻿using System.Collections.Generic;
+
 using System.Linq;
-using Unity.VisualScripting;
+
 using UnityEngine;
+
 
 public class HexagonGeneration : MonoBehaviour
 {
-    public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs, puzzleList, meteoritePrefabs, fireoilpoolPrefabs, geyserPrefabs;
-    public GameObject parent;
+    public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs, puzzlePrefabs, meteoritePrefabs, fireoilpoolPrefabs, geyserPrefabs;
+    public  GameObject parent;
     public static int layers = 10;
     public int maxMountains, maxRifts, maxMeteorite, maxFireoilPool, maxGeyser;
-    private static List<GameObject> hexagons = new List<GameObject>();
+    //нужны для Data
+    public static List<GameObject> hexagons = new List<GameObject>();
+    public static List<GameObject> stones = new List<GameObject>();
+    public static List<GameObject> mountains = new List<GameObject>();
+    public static List<GameObject> puzzles = new List<GameObject>();
+    public static List<GameObject> meteorites = new List<GameObject>();
+    public static List<GameObject> fireoilpools = new List<GameObject>();
+    public static List<GameObject> geysers = new List<GameObject>();
     private List<GameObject> blockedHexes = new List<GameObject>();
+
     private HashSet<Vector3> occupiedPos = new HashSet<Vector3>();
     private int seed;
     private int mountainCount, geyserCount, fireoilCount, meteoriteCount;
@@ -35,7 +45,15 @@ public class HexagonGeneration : MonoBehaviour
 
     void Start()
     {
-        if(MenuManager.difficulty == 0) { maxMountains = 3; maxRifts = 1; }
+
+        hexagons.Clear();
+        stones.Clear();
+        mountains.Clear();
+        meteorites.Clear();
+        fireoilpools.Clear();
+        geysers.Clear();
+        puzzles.Clear();
+        if (MenuManager.difficulty == 0) { maxMountains = 3; maxRifts = 1; }
         else if (MenuManager.difficulty == 1) { maxMountains = 5; maxRifts = 3; }
         else if (MenuManager.difficulty == 2) { maxMountains = 7; maxRifts = 4; }
 
@@ -53,46 +71,45 @@ public class HexagonGeneration : MonoBehaviour
         CreateMeteorite();
         CreateFireoilPool();
         CreateToxideGeyser();
-        
-        CreateStones();
-        
         blockedHexes.AddRange(hexagons.Take(7)); //добавляем центральные hexagon в заблокированные, чтобы исключить спаун rift в центре 
         for (int rift = 0; rift <= maxRifts; rift++) //Создание нескольких разломов
         {
             CreateRift();                           
         }
-
+        CreateStones();
         parent.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
        // GenerateResources(hexagons);
         RandomizeHeights();
         GenerateName();
     }
+
     void GenerateName()
     {
         int riftCounter = 1;
-        int mountainCounter = 1;
         int defaultCounter = 1;
 
         foreach (var hex in hexagons)
         {
-
             HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
-
             if (landscape != null)
             {
                 if (landscape.rift)
                 {
                     hex.name = $"HexagonRift_{riftCounter}";
-                    riftCounter++; 
+                    riftCounter++;
                 }
-                else if (landscape.mountain)
-                {
-                    hex.name = $"HexagonMountain_{mountainCounter}";
-                    mountainCounter++; 
-                }
+
                 else
                 {
-                    hex.name = $"HexagonDefault_{defaultCounter}";
+
+                    if (hex.name.Contains("HexagonOne"))
+                    {
+                        hex.name = $"HexagonOne_{defaultCounter}";
+                    }
+                    else if (hex.name.Contains("HexagonTwo"))
+                    {
+                        hex.name = $"HexagonTwo_{defaultCounter}";
+                    }
                     defaultCounter++;
                 }
             }
@@ -331,8 +348,9 @@ public class HexagonGeneration : MonoBehaviour
                     int chance = hasMountain ? 60 : 20;
                     if (Random.Range(0, 500) <= 1)//спаун жорика
                     {
-                        GameObject jorik = Instantiate(puzzleList[0], child.position, Quaternion.identity);
+                        GameObject jorik = Instantiate(puzzlePrefabs[0], child.position, Quaternion.identity);
                         jorik.transform.SetParent(child.transform);
+                        puzzles.Add(jorik);
                         Debug.Log("ЭТО ЖОРИКККК!!!!!");
                     }
                     else
@@ -344,9 +362,9 @@ public class HexagonGeneration : MonoBehaviour
                             int rotZ = Random.Range(0, 6);
                             int[] rotations = { 30, 90, 150, 210, 270, 330 };
                             int stoneIndex = Random.Range(0, stonePrefabs.Length);
-
                             GameObject stone = Instantiate(stonePrefabs[stoneIndex], child.position, Quaternion.identity);
                             stone.transform.SetParent(child.transform);
+                            stones.Add(stone);
                             stone.transform.rotation = Quaternion.Euler(rotations[rotX], rotations[rotY], rotations[rotZ]);
                         }
                     }
@@ -392,6 +410,7 @@ public class HexagonGeneration : MonoBehaviour
                     {
                         GameObject mountain = Instantiate(mountainPrefabs[Random.Range(0, mountainPrefabs.Length)], child.position, Quaternion.identity);
                         mountain.transform.SetParent(child.transform);
+                        mountains.Add(mountain);
                         mountainCount += 1;
 
                         landscape.ActivateMountain();
@@ -447,6 +466,7 @@ public class HexagonGeneration : MonoBehaviour
                         landscape.ActivateMeteorite();
                         GameObject Meteorite = Instantiate(meteoritePrefabs[Random.Range(0, meteoritePrefabs.Length)], child.position, Quaternion.identity);
                         Meteorite.transform.SetParent(child.transform);
+                        meteorites.Add(Meteorite);
 
                         HexagonProfile profile = hex.GetComponent<HexagonProfile>();
                         profile.Obscurrium = 50;
@@ -479,6 +499,7 @@ public class HexagonGeneration : MonoBehaviour
                         landscape.ActivateFireoilPool();
                         GameObject Fireoil = Instantiate(fireoilpoolPrefabs[Random.Range(0, fireoilpoolPrefabs.Length)], child.position, Quaternion.identity);
                         Fireoil.transform.SetParent(child.transform);
+                        fireoilpools.Add(Fireoil);
 
                         HexagonProfile profile = hex.GetComponent<HexagonProfile>();
                         profile.Ignoleum = 50;
@@ -511,7 +532,7 @@ public class HexagonGeneration : MonoBehaviour
                         landscape.ActivateGeyser();
                         GameObject Geyser = Instantiate(geyserPrefabs[Random.Range(0, geyserPrefabs.Length)], child.position, Quaternion.identity);
                         Geyser.transform.SetParent(child.transform);
-
+                        geysers.Add(Geyser);
                         HexagonProfile profile = hex.GetComponent<HexagonProfile>();
                         profile.Venesum = 50;
                         break;
