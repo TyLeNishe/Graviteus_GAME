@@ -7,7 +7,7 @@ public class HexagonSaveLoad : MonoBehaviour
     public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs, puzzlePrefabs, meteoritePrefabs, fireoilpoolPrefabs, geyserPrefabs;
     public GameObject parent;
     public GameObject MenuCanvas;
-    private bool menuOff0rOn = false;
+    public static bool menuOff0rOn = false;
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape)){menuOff0rOn=!menuOff0rOn;}
@@ -25,7 +25,7 @@ public class HexagonSaveLoad : MonoBehaviour
     }
     public void ResumeGame()
     {
-        menuOff0rOn=false;
+       menuOff0rOn = false;      
     }
     public void ExitGame()
     {

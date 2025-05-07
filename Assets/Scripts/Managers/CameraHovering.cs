@@ -6,11 +6,14 @@ public class CameraHovering : MonoBehaviour
     public float moveMult = 1f, CameraTilt;
     public float moveSpeed;
     public float scrollSpeed = 450f;
+    public static bool TerminalState = false;
 
     private Vector3 targetPosition;  // Целевая позиция для плавного перемещения
     private Vector3 targetRotation;  // Целевой угол наклона камеры
     private float smoothTime = 0.6f; // Время для сглаживания
     private Vector3 velocity = Vector3.zero;  // Для расчета скорости сглаживания
+
+    public void TerminalPausing() { if ( TerminalState ) { TerminalState = false; } else { TerminalState = true; }}
 
     void Start()
     {
@@ -80,21 +83,23 @@ public class CameraHovering : MonoBehaviour
         //    else { DirectionChosen.hov_z = 0; smoothTime = 1.2f; }
 
         //}
+        if (HexagonSaveLoad.menuOff0rOn == false && !TerminalState)
+        {
+            // Перемещение камеры
+            moveVector = new Vector3(moveSpeed * DirectionChosen.hov_x, (-(up_scroll_enabled - 1) + (down_scroll_enabled - 1)) * -scrollSpeed / 12, moveSpeed * DirectionChosen.hov_z);
 
-        // Перемещение камеры
-        moveVector = new Vector3(moveSpeed * DirectionChosen.hov_x, (-(up_scroll_enabled - 1) + (down_scroll_enabled - 1)) * -scrollSpeed / 12, moveSpeed * DirectionChosen.hov_z);
+            if (smoothTime == 0.2f) { scrollSpeed = 150f; }
+            else { scrollSpeed = 600f; }
 
-        if (smoothTime == 0.2f) { scrollSpeed = 150f; }
-        else { scrollSpeed = 600f; }
+            // Целевая позиция
+            targetPosition = transform.position + scrollVector + moveVector;
 
-        // Целевая позиция
-        targetPosition = transform.position + scrollVector + moveVector;
+            // Плавное перемещение
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
 
-        // Плавное перемещение
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
-
-        // Плавный наклон камеры
-        targetRotation = new Vector3(CameraTilt, 0, 0);
-        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, targetRotation, Time.deltaTime * 10f);
+            // Плавный наклон камеры
+            targetRotation = new Vector3(CameraTilt, 0, 0);
+            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, targetRotation, Time.deltaTime * 10f);
+        }
     }
 }
