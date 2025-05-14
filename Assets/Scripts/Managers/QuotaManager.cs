@@ -23,7 +23,7 @@ public class QuotaScript : MonoBehaviour
 
     void Start()
     {
-        //������� � ������� ������ ������ �� ��� �������� ����� � ��� ����������� ��������� ������
+       
 
         quota.Add("obs", 0);
         quota.Add("ign", 0);
@@ -46,7 +46,7 @@ public class QuotaScript : MonoBehaviour
     {
         for (int i = 0; i < resourceID.Length; i++)
         {
-            ResourceDebug.storage[resourceID[i]] -= quota[resourceID[i]];
+            ResourceManager.resources[resourceID[i]] -= quota[resourceID[i]];
         }
         NewQuota();
     }
@@ -87,7 +87,7 @@ public class QuotaScript : MonoBehaviour
         packages_ready = 0;
         for (int i = 0; i < resourceID.Length; i++)
         {
-            if (quota[resourceID[i]] <= ResourceDebug.storage[resourceID[i]]) { packages_ready += 1; }
+            if (quota[resourceID[i]] <= ResourceManager.resources[resourceID[i]]) { packages_ready += 1; }
         }
         if (packages_ready >= resourceID.Length) { launch = true; } else { launch = false; }
 
