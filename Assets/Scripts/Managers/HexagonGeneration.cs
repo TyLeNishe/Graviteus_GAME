@@ -8,7 +8,7 @@ using UnityEngine;
 public class HexagonGeneration : MonoBehaviour
 {
     public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs, puzzlePrefabs, meteoritePrefabs, fireoilpoolPrefabs, geyserPrefabs;
-    public  GameObject parent;
+    public GameObject parent;
     public static int layers = 10;
     public int maxMountains, maxRifts, maxMeteorite, maxFireoilPool, maxGeyser;
     //нужны для Data
@@ -67,20 +67,34 @@ public class HexagonGeneration : MonoBehaviour
 
         GenerateLayers();
         SpawnMountains();
-        
+
         CreateMeteorite();
         CreateFireoilPool();
         CreateToxideGeyser();
         blockedHexes.AddRange(hexagons.Take(7)); //добавляем центральные hexagon в заблокированные, чтобы исключить спаун rift в центре 
         for (int rift = 0; rift <= maxRifts; rift++) //Создание нескольких разломов
         {
-            CreateRift();                           
+            CreateRift();
         }
         CreateStones();
         parent.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
-       // GenerateResources(hexagons);
+        // GenerateResources(hexagons);
         RandomizeHeights();
         GenerateName();
+        AddClickHandlers();
+    }
+
+    void AddClickHandlers()
+    {
+        foreach (GameObject hex in hexagons)
+        {
+            var clickHandler = hex.AddComponent<HexagonClickHandler>();
+
+            if (hex.GetComponent<HexagonOutline>() == null)
+            {
+                hex.AddComponent<HexagonOutline>();
+            }
+        }
     }
 
     void GenerateName()
@@ -392,7 +406,7 @@ public class HexagonGeneration : MonoBehaviour
     void SpawnMountains()
     {
 
-        float minDistanceForMountains = 8.0f; 
+        float minDistanceForMountains = 8.0f;
 
         foreach (var hex in hexagons)
         {
@@ -446,7 +460,7 @@ public class HexagonGeneration : MonoBehaviour
     }
     void CreateMeteorite()
     {
-        float minDistanceForMeteorite = 8.0f; 
+        float minDistanceForMeteorite = 8.0f;
 
         foreach (var hex in hexagons)
         {
@@ -458,7 +472,7 @@ public class HexagonGeneration : MonoBehaviour
 
             foreach (Transform child in hex.transform)
             {
-                if (child.name.Contains("meteorite_position") && Random.Range(0, 50) <= 10 && landscape.IsDefault()) 
+                if (child.name.Contains("meteorite_position") && Random.Range(0, 50) <= 10 && landscape.IsDefault())
                 {
                     if (maxMeteorite > meteoriteCount)
                     {
@@ -491,7 +505,7 @@ public class HexagonGeneration : MonoBehaviour
 
             foreach (Transform child in hex.transform)
             {
-                if (child.name.Contains("fireoilpool_position") && Random.Range(0, 50) <= 10 && landscape.IsDefault()) 
+                if (child.name.Contains("fireoilpool_position") && Random.Range(0, 50) <= 10 && landscape.IsDefault())
                 {
                     if (maxFireoilPool > fireoilCount)
                     {
@@ -524,7 +538,7 @@ public class HexagonGeneration : MonoBehaviour
 
             foreach (Transform child in hex.transform)
             {
-                if (child.name.Contains("geyser_position") && Random.Range(0, 50) <= 10 && landscape.IsDefault()) 
+                if (child.name.Contains("geyser_position") && Random.Range(0, 50) <= 10 && landscape.IsDefault())
                 {
                     if (maxGeyser > geyserCount)
                     {
