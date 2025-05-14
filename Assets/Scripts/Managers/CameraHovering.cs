@@ -5,7 +5,7 @@ public class CameraHovering : MonoBehaviour
     public Vector3 moveVector, scrollVector, tiltVector;
     public float moveMult = 1f, CameraTilt;
     public float moveSpeed;
-    public float scrollSpeed = 450f;
+    public float scrollSpeed = 600f;
     public static bool TerminalState = false;
 
     private Vector3 targetPosition;  // Целевая позиция для плавного перемещения

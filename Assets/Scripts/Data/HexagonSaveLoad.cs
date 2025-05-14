@@ -6,12 +6,14 @@ public class HexagonSaveLoad : MonoBehaviour
 {
     public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs, puzzlePrefabs, meteoritePrefabs, fireoilpoolPrefabs, geyserPrefabs;
     public GameObject parent;
-    public GameObject MenuCanvas;
-    public static bool menuOff0rOn = false;
+    public GameObject MenuCanvas, QuotaCanvas;
+    public static bool menuOff0rOn = false, quota_menu = false;
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape)){menuOff0rOn=!menuOff0rOn;}
+        if (Input.GetKeyDown(KeyCode.Q)) { quota_menu=!quota_menu; }
         MenuCanvas.SetActive(menuOff0rOn);
+        QuotaCanvas.SetActive(quota_menu);
     }
     public void SaveGame()
     {
