@@ -6,26 +6,28 @@ public class HexagonSaveLoad : MonoBehaviour
 {
     public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs, puzzlePrefabs, meteoritePrefabs, fireoilpoolPrefabs, geyserPrefabs;
     public GameObject parent;
-    public GameObject MenuCanvas;
-    public static bool menuOff0rOn = false;
+    public GameObject MenuCanvas, QuotaCanvas;
+    public static bool menuOff0rOn = false, quota_menu = false;
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape)){menuOff0rOn=!menuOff0rOn;}
+        if (Input.GetKeyDown(KeyCode.Escape)) { menuOff0rOn = !menuOff0rOn; }
+        if (Input.GetKeyDown(KeyCode.Q)) { quota_menu = !quota_menu; }
         MenuCanvas.SetActive(menuOff0rOn);
+        QuotaCanvas.SetActive(quota_menu);
     }
     public void SaveGame()
     {
         SaveMap("map_data.json");
-        Debug.Log("Игра сохранена!");
+        Debug.Log("пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
     }
     public void LoadGame()
     {
         LoadMap("map_data.json");
-        Debug.Log("Игра загружена!");
+        Debug.Log("пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
     }
     public void ResumeGame()
     {
-       menuOff0rOn = false;      
+        menuOff0rOn = false;
     }
     public void ExitGame()
     {
@@ -110,7 +112,7 @@ public class HexagonSaveLoad : MonoBehaviour
 
         foreach (var stone in HexagonGeneration.stones)
         {
-            if(stone == null) continue;
+            if (stone == null) continue;
             StoneData stoneData = new StoneData
             {
                 position = stone.transform.position,
@@ -132,12 +134,12 @@ public class HexagonSaveLoad : MonoBehaviour
             mapData.puzzles.Add(puzzleData);
         }
 
-        // Преобразуем данные в JSON и сохраняем в файл
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ JSON пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
         string json = JsonUtility.ToJson(mapData);
         string path = Path.Combine(Application.persistentDataPath, fileName);
         File.WriteAllText(path, json);
 
-        Debug.Log($"Карта сохранена в файл: {path}");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ: {path}");
     }
 
     public void LoadMap(string fileName)
@@ -146,7 +148,7 @@ public class HexagonSaveLoad : MonoBehaviour
 
         if (!File.Exists(path))
         {
-            Debug.LogError($"Файл не найден: {path}");
+            Debug.LogError($"пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: {path}");
             return;
         }
 
@@ -248,7 +250,7 @@ public class HexagonSaveLoad : MonoBehaviour
             HexagonGeneration.puzzles.Add(puzzle);
         }
 
-        Debug.Log("Карта успешно загружена.");
+        Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
     }
     private void ClearOldMap()
     {
@@ -284,7 +286,7 @@ public class HexagonSaveLoad : MonoBehaviour
     private int GetStonePrefabIndex(GameObject stone)
     {
         string cleanedName = stone.name.Replace("(Clone)", "").Trim();
-        for (int i = 0; i < stonePrefabs.Length; i++){if (cleanedName == stonePrefabs[i].name){return i;}}
+        for (int i = 0; i < stonePrefabs.Length; i++) { if (cleanedName == stonePrefabs[i].name) { return i; } }
         return -1;
     }
 

@@ -8,9 +8,9 @@ public class ResourceTextManager : MonoBehaviour
 
     public void Update()
     {
-        obs_count.text = ResourceDebug.obs.ToString();
-        ign_count.text = ResourceDebug.ign.ToString();
-        ven_count.text = ResourceDebug.ven.ToString();
+        obs_count.text = ResourceDebug.storage["obs"].ToString();
+        ign_count.text = ResourceDebug.storage["ign"].ToString();
+        ven_count.text = ResourceDebug.storage["ven"].ToString();
     }
 }
 
