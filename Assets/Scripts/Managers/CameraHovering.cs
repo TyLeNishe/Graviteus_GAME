@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class CameraHovering : MonoBehaviour
 {
-    public Vector3 moveVector, scrollVector, tiltVector;
-    public float moveMult = 1f, CameraTilt;
-    public float moveSpeed;
-    public float scrollSpeed = 450f;
-    public static bool TerminalState = false;
+    private Vector3 moveVector, scrollVector, tiltVector;
+    private float moveMult = 1f, CameraTilt;
+    private float moveSpeed;
+    private float scrollSpeed = 450f;
+    private static bool TerminalState = false;
 
     private Vector3 targetPosition;  // Целевая позиция для плавного перемещения
     private Vector3 targetRotation;  // Целевой угол наклона камеры
@@ -88,8 +88,8 @@ public class CameraHovering : MonoBehaviour
             // Перемещение камеры
             moveVector = new Vector3(moveSpeed * DirectionChosen.hov_x, (-(up_scroll_enabled - 1) + (down_scroll_enabled - 1)) * -scrollSpeed / 12, moveSpeed * DirectionChosen.hov_z);
 
-            if (smoothTime == 0.2f) { scrollSpeed = 150f; }
-            else { scrollSpeed = 600f; }
+            if (smoothTime == 0.2f) { scrollSpeed = 600f; }
+            else { scrollSpeed = 1200f; }
 
             // Целевая позиция
             targetPosition = transform.position + scrollVector + moveVector;

@@ -68,7 +68,8 @@ public class HexagonGeneration : MonoBehaviour
         GenerateLayers();
         SpawnMountains();
 
-        CreateMeteorite();
+        CreateMeteorite(); 
+       
         CreateFireoilPool();
         CreateToxideGeyser();
         blockedHexes.AddRange(hexagons.Take(7)); //добавляем центральные hexagon в заблокированные, чтобы исключить спаун rift в центре 
@@ -464,6 +465,7 @@ public class HexagonGeneration : MonoBehaviour
 
         foreach (var hex in hexagons)
         {
+            
             HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
             if (landscape == null) continue;
 
@@ -472,7 +474,7 @@ public class HexagonGeneration : MonoBehaviour
 
             foreach (Transform child in hex.transform)
             {
-                if (child.name.Contains("meteorite_position") && Random.Range(0, 50) <= 10 && landscape.IsDefault())
+                if (child.name.Contains("meteorite_position") && Random.Range(0, 50) <= 500 && landscape.IsDefault())
                 {
                     if (maxMeteorite > meteoriteCount)
                     {
@@ -480,8 +482,12 @@ public class HexagonGeneration : MonoBehaviour
                         landscape.ActivateMeteorite();
                         GameObject Meteorite = Instantiate(meteoritePrefabs[Random.Range(0, meteoritePrefabs.Length)], child.position, Quaternion.identity);
                         Meteorite.transform.SetParent(child.transform);
-                        meteorites.Add(Meteorite);
 
+                        Meteorite.transform.eulerAngles = new Vector3(90, 0, 0);
+                        Vector3 MeteorPos = Meteorite.transform.position;
+                        Meteorite.transform.position = MeteorPos + new Vector3(0, 0, 0.2f);
+
+                        meteorites.Add(Meteorite);
                         HexagonProfile profile = hex.GetComponent<HexagonProfile>();
                         profile.Obscurrium = 50;
                         break;
@@ -513,6 +519,11 @@ public class HexagonGeneration : MonoBehaviour
                         landscape.ActivateFireoilPool();
                         GameObject Fireoil = Instantiate(fireoilpoolPrefabs[Random.Range(0, fireoilpoolPrefabs.Length)], child.position, Quaternion.identity);
                         Fireoil.transform.SetParent(child.transform);
+
+                        Fireoil.transform.eulerAngles = new Vector3(90, 0, 0);
+                        Vector3 IgnPos = Fireoil.transform.position;
+                        Fireoil.transform.position = IgnPos + new Vector3(0, 0, 0.2f);
+
                         fireoilpools.Add(Fireoil);
 
                         HexagonProfile profile = hex.GetComponent<HexagonProfile>();
@@ -546,6 +557,11 @@ public class HexagonGeneration : MonoBehaviour
                         landscape.ActivateGeyser();
                         GameObject Geyser = Instantiate(geyserPrefabs[Random.Range(0, geyserPrefabs.Length)], child.position, Quaternion.identity);
                         Geyser.transform.SetParent(child.transform);
+
+                        Geyser.transform.eulerAngles = new Vector3(90, 0, 0);
+                        Vector3 VenPos = Geyser.transform.position;
+                        Geyser.transform.position = VenPos + new Vector3(0, 0, 0.3f);
+
                         geysers.Add(Geyser);
                         HexagonProfile profile = hex.GetComponent<HexagonProfile>();
                         profile.Venesum = 50;
