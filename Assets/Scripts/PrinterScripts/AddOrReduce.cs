@@ -25,8 +25,11 @@ public class CounterButton : MonoBehaviour
     {
         if (int.TryParse(_targetText.text, out int currentValue))
         {
-            currentValue += _step;
-            _targetText.text = currentValue.ToString();
+            if (currentValue + _step >= 0)
+            {
+                currentValue += _step;
+                _targetText.text = currentValue.ToString();
+            }
         }
         else
         {

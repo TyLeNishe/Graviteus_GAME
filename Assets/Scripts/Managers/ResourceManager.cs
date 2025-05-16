@@ -52,7 +52,7 @@ public class ResourceManager : MonoBehaviour
         toxidText.text = "Токсид: " + resources["ven"].ToString();
         prochnitText.text = "Прочнит: " + resources["val"].ToString();
         unstableText.text = "Нестабилий: " + resources["inst"].ToString();
-        putnarText.text = "Путнар: " + resources["pug"].ToString();
+        putnarText.text = "Пугнар: " + resources["pug"].ToString();
         cartridgesText.text = "Картриджи: " + resources["crtg"].ToString();
     }
 
