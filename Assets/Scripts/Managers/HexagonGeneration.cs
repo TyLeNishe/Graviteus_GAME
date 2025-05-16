@@ -68,8 +68,8 @@ public class HexagonGeneration : MonoBehaviour
         GenerateLayers();
         SpawnMountains();
 
-        CreateMeteorite(); 
-       
+        CreateMeteorite();
+
         CreateFireoilPool();
         CreateToxideGeyser();
         blockedHexes.AddRange(hexagons.Take(7)); //добавляем центральные hexagon в заблокированные, чтобы исключить спаун rift в центре 
@@ -89,6 +89,7 @@ public class HexagonGeneration : MonoBehaviour
     {
         foreach (GameObject hex in hexagons)
         {
+            hex.AddComponent<ConcentrationManager>();
             var clickHandler = hex.AddComponent<HexagonClickHandler>();
 
             if (hex.GetComponent<HexagonOutline>() == null)
@@ -465,7 +466,7 @@ public class HexagonGeneration : MonoBehaviour
 
         foreach (var hex in hexagons)
         {
-            
+
             HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
             if (landscape == null) continue;
 
