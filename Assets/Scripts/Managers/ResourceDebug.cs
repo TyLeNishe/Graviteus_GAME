@@ -3,6 +3,18 @@ using UnityEngine;
 
 public class ResourceDebug : MonoBehaviour
 {
+    public static Dictionary<string, float> storage =
+    new Dictionary<string, float>();
+
+    void Start()
+    {
+        storage.Add("obs", 0);
+        storage.Add("ign", 0);
+        storage.Add("ven", 0);
+        storage.Add("val", 0);
+        storage.Add("inst", 0);
+        storage.Add("pug", 0);
+    }
 
     public int inc = 1, mult = 1;
 
@@ -14,9 +26,9 @@ public class ResourceDebug : MonoBehaviour
     public void MultModeX10() { mult = 10; }
     public void MultModeX100() { mult = 100; }
 
-    public void ObsChange() { ResourceManager.resources["obs"] += inc * mult; }
-    public void IgnChange() { ResourceManager.resources["ign"] += inc * mult; }
-    public void VenChange() { ResourceManager.resources["ven"] += inc * mult; }
+    public void ObsChange() { storage["obs"] += inc * mult; }
+    public void IgnChange() { storage["ign"] += inc * mult; }
+    public void VenChange() { storage["ven"] += inc * mult; }
 
 
 }

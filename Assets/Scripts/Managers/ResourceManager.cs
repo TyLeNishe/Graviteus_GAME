@@ -7,36 +7,53 @@ public class ResourceManager : MonoBehaviour
     public static ResourceManager Instance;
 
     // Ресурсы и их количество
-    public static Dictionary<string, float> resources = new Dictionary<string, float>()
+    public Dictionary<string, int> resources = new Dictionary<string, int>()
     {
         {"obs", 20},
         {"ign", 20},
         {"ven", 20},
-        {"ctrg", 100},
         {"val", 6},
         {"inst", 7},
-        {"pug", 1}
+        {"pug", 1},
+        {"crtg", 100},
     };
 
     // Ссылки на текстовые элементы UI
-    public Text obscurriumText;
-    public Text ignoleumText;
-    public Text venesumText;
+    public Text darkiumText;
+    public Text fireoilText;
+    public Text toxidText;
+    public Text prochnitText;
+    public Text unstableText;
+    public Text putnarText;
     public Text cartridgesText;
-    public Text valensiumText;
-    public Text instabiliumText;
-    public Text pugnarText;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void Start()
+    {
+        UpdateAllUI();
+    }
 
     // Обновление всех текстовых полей
-    void Update()
+    public void UpdateAllUI()
     {
-        obscurriumText.text = "Тёмниум: " + resources["obs"].ToString();
-        ignoleumText.text = "Огнемасло: " + resources["ign"].ToString();
-        venesumText.text = "Токсид: " + resources["ven"].ToString();
-        cartridgesText.text = "Картриджи: " + resources["ctrg"].ToString();
-        valensiumText.text = "Прочнит: " + resources["val"].ToString();
-        instabiliumText.text = "Нестабилий: " + resources["inst"].ToString();
-        pugnarText.text = "Пугнар: " + resources["pug"].ToString();
+        darkiumText.text = "Тёмниум: " + resources["obs"].ToString();
+        fireoilText.text = "Огнемасло: " + resources["ign"].ToString();
+        toxidText.text = "Токсид: " + resources["ven"].ToString();
+        prochnitText.text = "Прочнит: " + resources["val"].ToString();
+        unstableText.text = "Нестабилий: " + resources["inst"].ToString();
+        putnarText.text = "Путнар: " + resources["pug"].ToString();
+        cartridgesText.text = "Картриджи: " + resources["crtg"].ToString();
     }
 
     // Добавить ресурсы
@@ -73,25 +90,25 @@ public class ResourceManager : MonoBehaviour
         switch (resourceName)
         {
             case "obs":
-                obscurriumText.text = "Тёмниум: " + resources[resourceName].ToString();
+                darkiumText.text = "Тёмниум: " + resources[resourceName].ToString();
                 break;
             case "ign":
-                ignoleumText.text = "Огнемасло: " + resources[resourceName].ToString();
+                fireoilText.text = "Огнемасло: " + resources[resourceName].ToString();
                 break;
             case "ven":
-                venesumText.text = "Токсид: " + resources[resourceName].ToString();
-                break;
-            case "ctrg":
-                cartridgesText.text = "Картриджи: " + resources[resourceName].ToString();
+                toxidText.text = "Токсид: " + resources[resourceName].ToString();
                 break;
             case "val":
-                valensiumText.text = "Прочнит: " + resources[resourceName].ToString();
+                prochnitText.text = "Прочнит: " + resources[resourceName].ToString();
                 break;
             case "inst":
-                instabiliumText.text = "Нестабилий: " + resources[resourceName].ToString();
+                unstableText.text = "Нестабилий: " + resources[resourceName].ToString();
                 break;
             case "pug":
-                pugnarText.text = "Пугнар: " + resources[resourceName].ToString();
+                putnarText.text = "Путнар: " + resources[resourceName].ToString();
+                break;
+            case "crtg":
+                cartridgesText.text = "Картриджи: " + resources[resourceName].ToString();
                 break;
         }
     }
