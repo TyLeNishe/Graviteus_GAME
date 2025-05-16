@@ -5,7 +5,7 @@ public class HexagonOutline : MonoBehaviour
 {
     [SerializeField] private Color customColor = Color.red;
     [SerializeField] private bool useRandomColor = true;
-    [SerializeField] private float outlineWidth = 0.06f;
+    [SerializeField] private float outlineWidth = 0.03f;
 
     private LineRenderer lineRenderer;
     private MeshFilter meshFilter;
@@ -24,7 +24,7 @@ public class HexagonOutline : MonoBehaviour
         lineRenderer.endWidth = outlineWidth;
 
         Color outlineColor = useRandomColor ? GetRandomColor() : customColor;
-        lineRenderer.material = new Material(Shader.Find("Unlit/Color")) { color = new Color(100, 19, 73) };
+        lineRenderer.material = new Material(Shader.Find("Unlit/Color")) { color = new Color32(126, 241, 0, 255) };
 
         lineRenderer.useWorldSpace = false;
         lineRenderer.enabled = false;

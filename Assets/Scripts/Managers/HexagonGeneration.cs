@@ -90,6 +90,7 @@ public class HexagonGeneration : MonoBehaviour
         foreach (GameObject hex in hexagons)
         {
             hex.AddComponent<ConcentrationManager>();
+            hex.AddComponent<IsChosen>();
             var clickHandler = hex.AddComponent<HexagonClickHandler>();
 
             if (hex.GetComponent<HexagonOutline>() == null)

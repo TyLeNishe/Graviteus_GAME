@@ -601,7 +601,7 @@ GameObject:
   m_Component:
   - component: {fileID: 86125405}
   m_Layer: 5
-  m_Name: Down Panel
+  m_Name: DownPanelForBuilder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1532,7 +1532,7 @@ GameObject:
   - component: {fileID: 287443198}
   - component: {fileID: 287443197}
   m_Layer: 5
-  m_Name: Set (1)
+  m_Name: IgnText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2207,7 +2207,7 @@ GameObject:
   - component: {fileID: 318937222}
   - component: {fileID: 318937221}
   m_Layer: 5
-  m_Name: Set (2)
+  m_Name: VenText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4457,8 +4457,8 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.1
+      scalar: 0.6
+      minScalar: 0.8
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8915,7 +8915,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1005242416}
-  - {fileID: 1400044229}
   - {fileID: 2077891116}
   m_Father: {fileID: 1339405333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16039,7 +16038,7 @@ GameObject:
   - component: {fileID: 1283595522}
   - component: {fileID: 1283595525}
   m_Layer: 5
-  m_Name: Build
+  m_Name: Builder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16108,9 +16107,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1283595522}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: 
+      - m_Target: {fileID: 1283595525}
+        m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
+        m_MethodName: ToggleActiveState
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16171,6 +16170,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
+  panelActivate: 0
+  panel: {fileID: 86125404}
+  obsText: {fileID: 1745626417}
+  ignText: {fileID: 287443198}
+  venText: {fileID: 318937222}
+  obs: 0
+  ign: 0
+  ven: 0
 --- !u!1 &1299591280
 GameObject:
   m_ObjectHideFlags: 0
@@ -16325,6 +16332,7 @@ RectTransform:
   - {fileID: 1737672693}
   - {fileID: 1299591281}
   - {fileID: 1596518556}
+  - {fileID: 1400044229}
   - {fileID: 528401976}
   m_Father: {fileID: 1826175983}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16920,12 +16928,12 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400044228}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.4}
-  m_LocalScale: {x: 0.9222202, y: 0.9222201, z: 0.9222202}
+  m_LocalPosition: {x: 0, y: 0, z: 0.40002665}
+  m_LocalScale: {x: 0.9222202, y: 0.9222202, z: 0.9222202}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1283595521}
-  m_Father: {fileID: 528401976}
+  m_Father: {fileID: 1339405333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20146,7 +20154,7 @@ GameObject:
   - component: {fileID: 1745626417}
   - component: {fileID: 1745626416}
   m_Layer: 5
-  m_Name: Set
+  m_Name: ObsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
