@@ -24,7 +24,7 @@ public class HexagonOutline : MonoBehaviour
         lineRenderer.endWidth = outlineWidth;
 
         Color outlineColor = useRandomColor ? GetRandomColor() : customColor;
-        lineRenderer.material = new Material(Shader.Find("Unlit/Color")) { color = outlineColor };
+        lineRenderer.material = new Material(Shader.Find("Unlit/Color")) { color = new Color(100, 19, 73) };
 
         lineRenderer.useWorldSpace = false;
         lineRenderer.enabled = false;
