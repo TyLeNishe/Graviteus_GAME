@@ -44,13 +44,13 @@ public class Time_Script : MonoBehaviour
             else if (day_cycle > state_lenth && day_cycle <= state_lenth * 2) { sun_state = 1;}
             else if (day_cycle > state_lenth * 2 && day_cycle <= state_lenth * 3) { sun_state = 2;}
             else if (day_cycle > state_lenth * 3 && day_cycle < state_lenth * 4) { sun_state = 3;}
-            else if (day_cycle >= state_lenth * 4) { day_cycle = 0f; weather_flag = true; }
+            else if (day_cycle >= state_lenth * 4) { day_cycle = 0f;}
 
             if (clock_frame >= 17) { clock_frame = 1; current_circle += 1; }
 
             if (current_circle >= full_circles) { current_circle = 0; }
 
-            if (hour >= 24f) { hour = 0.0f; } else { hour += Time.deltaTime * time_speed; day_cycle += Time.deltaTime * time_speed; }
+            if (hour >= 24f) { hour = 0.0f; weather_flag = true; } else { hour += Time.deltaTime * time_speed; day_cycle += Time.deltaTime * time_speed; }
 
             if (hour > (clock_frame + (current_circle * 16)) * (24f / 16f / full_circles) && hour <= (clock_frame + 1 + (current_circle * 16)) * (24f / 16f / full_circles)) { clock.sprite = Inactive_Sprites[clock_frame - 1]; clock_frame += 1; }
            

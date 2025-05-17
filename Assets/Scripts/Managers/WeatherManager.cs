@@ -7,7 +7,8 @@ public class WeatherManager : MonoBehaviour
 
     private void Update()
     {
-        if (weather_state == 1) { rain.SetActive(!rain.activeSelf); }
+        if (weather_state == 0) { rain.SetActive(false); } 
+        else if (weather_state == 1) { rain.SetActive(true); }
 
         if (weather_state == 0 && Time_Script.weather_flag == true)
         {
