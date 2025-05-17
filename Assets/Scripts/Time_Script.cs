@@ -9,7 +9,7 @@ public class Time_Script : MonoBehaviour
     public List<Sprite> Active_Sprites, Inactive_Sprites;
     public Text Hours, Minutes, Day;
 
-    private float min = 0, hour = 0, day = 0, full_circles = 8, current_circle = 0, time_speed = 1, day_cycle = 24f, state_lenth = 48f;
+    private float hour = 0, full_circles = 8, current_circle = 0, time_speed = 1, day_cycle = 24f, state_lenth = 48f;
     private int clock_frame = 1, sun_state = 1; //0 - Восход, 1 - День, 2 - Закат, 3 - Ночь
     public Image clock;
     public Light Light;

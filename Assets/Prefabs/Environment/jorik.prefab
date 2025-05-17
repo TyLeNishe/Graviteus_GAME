@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a4dff89bbdb84234985ad603e6b02e27, type: 3}
       propertyPath: m_LocalScale.x
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a4dff89bbdb84234985ad603e6b02e27, type: 3}
       propertyPath: m_LocalScale.y
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a4dff89bbdb84234985ad603e6b02e27, type: 3}
       propertyPath: m_LocalScale.z
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a4dff89bbdb84234985ad603e6b02e27, type: 3}
       propertyPath: m_LocalPosition.x
@@ -63,7 +63,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: a4dff89bbdb84234985ad603e6b02e27, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 1c984f37fdc53f648a3a3349b4e5ff66, type: 2}
+      objectReference: {fileID: 2100000, guid: ea3ec1a1a074465489f1f104a5a1d27b, type: 2}
     - target: {fileID: -5754084199372789682, guid: a4dff89bbdb84234985ad603e6b02e27, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -79,9 +79,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a4dff89bbdb84234985ad603e6b02e27, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6839510111402028581}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a4dff89bbdb84234985ad603e6b02e27, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2026521410136527869}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a4dff89bbdb84234985ad603e6b02e27, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4497740511869619025}
@@ -108,33 +105,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JumpForce: 5
   DestroyTime: 1
---- !u!54 &2026521410136527869
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4705902298784241764}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &4497740511869619025
 BoxCollider:
   m_ObjectHideFlags: 0
