@@ -13,15 +13,14 @@ public class WeatherManager : MonoBehaviour
         if (weather_state == 0 && Time_Script.weather_flag == true)
         {
             int weather_change_try = Random.Range(0, 100);
-
-            if (weather_change_try <= 20) { weather_state = 1; }
+            if (weather_change_try <= 10) { weather_state = 1; }
             Time_Script.weather_flag = false;
         }
-        else if (weather_state != 0)
+        else if (weather_state != 0 && Time_Script.weather_flag == true)
         {
             int weather_change_try = Random.Range(0, 100);
-            weather_change_try = Random.Range(0, 100);
-            if (weather_change_try <= 80) { weather_state = 1; }
+            if (weather_change_try <= 80) { weather_state = 0; }
+            Time_Script.weather_flag = false;
         }
     }              
     
