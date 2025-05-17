@@ -5,9 +5,11 @@ public class HexagonClickHandler : MonoBehaviour
     private HexagonOutline outline;
     private ConcentrationManager concentration;
     private BuildManager buildManager;
+    private HexagonLandscape landscape;
     private static HexagonOutline currentlySelected;
     private void Start()
     {
+        landscape = GetComponent<HexagonLandscape>();
         outline = GetComponent<HexagonOutline>();
         concentration = GetComponent<ConcentrationManager>();
         if (outline == null)
@@ -49,10 +51,18 @@ public class HexagonClickHandler : MonoBehaviour
 
         outline.ToggleOutline(true);
         currentlySelected = outline;
-        buildManager.panelActivate = true;
-        buildManager.obs = concentration.obsConcentration;
-        buildManager.ign = concentration.ignConcentration;
-        buildManager.ven = concentration.venConcentration;
+        if (landscape != null && landscape.IsDefault())
+        {
+            buildManager.panelActivate = true;
+            buildManager.obs = concentration.obsConcentration;
+            buildManager.ign = concentration.ignConcentration;
+            buildManager.ven = concentration.venConcentration;
+        }
+        if (landscape != null && !landscape.IsDefault())
+        {
+            buildManager.panelActivate = false;
+            buildManager.panel.gameObject.SetActive(false);
+        }
     }
 
     private void OnMouseEnter()

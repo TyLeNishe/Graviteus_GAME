@@ -3,16 +3,18 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class HexagonOutline : MonoBehaviour
 {
-    [SerializeField] private Color customColor = Color.red;
-    [SerializeField] private bool useRandomColor = true;
     [SerializeField] private float outlineWidth = 0.03f;
 
     private LineRenderer lineRenderer;
     private MeshFilter meshFilter;
+    private HexagonLandscape landscape;
+    private Color defaultColor = new Color32(126, 241, 0, 255);
+    private Color landscapeColor = Color.red;
 
     private void Awake()
     {
         meshFilter = GetComponent<MeshFilter>();
+        landscape = GetComponent<HexagonLandscape>();
         InitializeOutline();
     }
 
@@ -22,26 +24,26 @@ public class HexagonOutline : MonoBehaviour
         lineRenderer.loop = true;
         lineRenderer.startWidth = outlineWidth;
         lineRenderer.endWidth = outlineWidth;
-
-        Color outlineColor = useRandomColor ? GetRandomColor() : customColor;
-        lineRenderer.material = new Material(Shader.Find("Unlit/Color")) { color = new Color32(126, 241, 0, 255) };
-
+        lineRenderer.material = new Material(Shader.Find("Unlit/Color"));
         lineRenderer.useWorldSpace = false;
         lineRenderer.enabled = false;
 
+        UpdateOutlineColor();
         UpdateOutlineShape();
     }
 
-    private Color GetRandomColor()
+    private void UpdateOutlineColor()
     {
-        return Random.Range(0, 3) switch
+        if (landscape != null)
         {
-            0 => new Color(0.2f, 0.8f, 0.2f),
-            1 => new Color(1f, 0.8f, 0f),
-            2 => new Color(0.8f, 0.1f, 0.1f),
-            _ => Color.white
-        };
+            lineRenderer.material.color = landscape.IsDefault() ? defaultColor : landscapeColor;
+        }
+        else
+        {
+            lineRenderer.material.color = defaultColor;
+        }
     }
+
     private void UpdateOutlineShape()
     {
         if (meshFilter != null && meshFilter.sharedMesh != null)
@@ -58,5 +60,6 @@ public class HexagonOutline : MonoBehaviour
             InitializeOutline();
 
         lineRenderer.enabled = state;
+        if (state) UpdateOutlineColor();
     }
 }

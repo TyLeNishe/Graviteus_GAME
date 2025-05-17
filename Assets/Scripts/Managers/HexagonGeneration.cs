@@ -40,9 +40,6 @@ public class HexagonGeneration : MonoBehaviour
     private const float defaultMin = 0.5f;
     private const float defaultMax = 0.8f;
 
-    private const float MaxDifferenceHeight = 0.5f;
-    private const float MinDifferenceHeight = 0.1f;
-
     void Start()
     {
 
@@ -79,7 +76,6 @@ public class HexagonGeneration : MonoBehaviour
         }
         CreateStones();
         parent.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
-        // GenerateResources(hexagons);
         RandomizeHeights();
         GenerateName();
         AddClickHandlers();
@@ -178,20 +174,30 @@ public class HexagonGeneration : MonoBehaviour
         }
     }
 
-    void GenerateResources(List<GameObject> hexagons)
-    {
-        foreach (var hex in hexagons)
-        {
-            HexagonResources Resources = hex.GetComponent<HexagonResources>();
-            if ((Resources.pollution == -1) && (Resources.ResourcesFertility == -1) && (hex.GetComponent<HexagonLandscape>().rift == false)) continue;
-
-            foreach (Transform child in hex.transform)
-            {
-                Resources.ActivateResources();
-            }
-        }
-    }
-
+    // void GenerateBuildings()
+    // {
+    //     foreach (var hex in hexagons)
+    //     {
+    //         BuildManager buildManager = hex.GetComponent<BuildManager>();
+    //         if (buildManager.isActive == true && buildManager.panelActivate == true) //&& тут проверка, что кнопка нажата)
+    //         {
+    //             BuildingHelper buildingHelper = hex.GetComponent<BuildingHelper>();
+    //             HexagonBuildings hexagonBuildings = hex.GetComponent <HexagonBuildings>();
+    //             if (buildingHelper.Mode == 1)
+    //             {
+    //                 hexagonBuildings.Finibus_factory = Instantiate(buildingHelper.Finibus_factory_prefab, hex.transform.position, Quaternion.identity);
+    //             }
+    //             if (buildingHelper.Mode == 2)
+    //             {
+    //                 hexagonBuildings.Generator_factory = Instantiate(buildingHelper.Generator_factory_prefab, hex.transform.position, Quaternion.identity);
+    //             }
+    //             if (buildingHelper.Mode == 3)
+    //             {
+    //                 hexagonBuildings.Venesum_factory = Instantiate(buildingHelper.Venesum_factory_prefab, hex.transform.position, Quaternion.identity);
+    //             }
+    //         }
+    //     }
+    // }
     bool IsOccupied(Vector3 pos)
     {
         foreach (var p in occupiedPos)
@@ -231,29 +237,6 @@ public class HexagonGeneration : MonoBehaviour
             else
             {
                 hex.transform.position = new Vector3(hex.transform.position.x, Random.Range(defaultMin, defaultMax), hex.transform.position.z);
-            }
-        }
-    }
-    void ControlFreeHex(GameObject hex)
-    {
-        Collider[] colliders = Physics.OverlapSphere(hex.transform.position, nearRadius);
-        foreach (var collider in colliders)
-        {
-            GameObject neighbour = collider.gameObject;
-            if ((neighbour != hex) && (neighbour.GetComponent<HexagonLandscape>().rift == false))
-            {
-                float neighbourHeight = neighbour.transform.position.y;
-                float hexHeight = hex.transform.position.y;
-                float heightDifference = Mathf.Abs(hexHeight - neighbourHeight);
-                if (heightDifference < MaxDifferenceHeight || heightDifference > MaxDifferenceHeight)
-                {
-                    float newHeight = hexHeight + Random.Range(-MaxDifferenceHeight, MaxDifferenceHeight);
-                    neighbour.transform.position = new Vector3(
-                    neighbour.transform.position.x,
-                    newHeight,
-                    neighbour.transform.position.z
-                    );
-                }
             }
         }
     }
