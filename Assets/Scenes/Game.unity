@@ -606,7 +606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &86125405
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1352,7 +1352,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 271219303}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1502371101}
+        m_TargetAssemblyTypeName: TextManagerForBuilder, Assembly-CSharp
+        m_MethodName: ToggleActiveNext
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &271219303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8885,7 +8897,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9949ccbe84eb1240a9b7f23575db34f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rain: {fileID: 487216730}
 --- !u!1 &528401975
 GameObject:
   m_ObjectHideFlags: 0
@@ -18102,6 +18113,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1502371100}
+  - component: {fileID: 1502371101}
   m_Layer: 5
   m_Name: Up
   m_TagString: Untagged
@@ -18131,6 +18143,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.00006382907}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1502371101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502371099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2ccd2465cc5c3409b5932e3816c23d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isObs: 1
+  isIgn: 0
+  isVen: 0
+  title: {fileID: 1687282700}
+  description: {fileID: 1540654024}
+  cost1: {fileID: 682363945}
+  cost2: {fileID: 1129285299}
 --- !u!1 &1513067977
 GameObject:
   m_ObjectHideFlags: 0
@@ -18416,7 +18447,7 @@ GameObject:
   - component: {fileID: 1540654024}
   - component: {fileID: 1540654023}
   m_Layer: 5
-  m_Name: Set (1)
+  m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19079,7 +19110,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1672176022}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1502371101}
+        m_TargetAssemblyTypeName: TextManagerForBuilder, Assembly-CSharp
+        m_MethodName: ToggleActivePrevios
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1672176022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19271,7 +19314,7 @@ GameObject:
   - component: {fileID: 1687282700}
   - component: {fileID: 1687282699}
   m_Layer: 5
-  m_Name: Set
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19367,7 +19410,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 56
-    m_Alignment: 1
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -20883,6 +20926,7 @@ MonoBehaviour:
   Minutes: {fileID: 649980212}
   Day: {fileID: 1655615607}
   clock: {fileID: 338026685}
+  Light: {fileID: 336164304}
 --- !u!1 &1836892174
 GameObject:
   m_ObjectHideFlags: 0
