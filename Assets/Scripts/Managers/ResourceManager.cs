@@ -7,7 +7,7 @@ public class ResourceManager : MonoBehaviour
     public static ResourceManager Instance;
 
     // Ресурсы и их количество
-    public Dictionary<string, int> resources = new Dictionary<string, int>()
+    public static Dictionary<string, float> resources = new Dictionary<string, float>()
     {
         {"obs", 20},
         {"ign", 20},
@@ -39,13 +39,8 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        UpdateAllUI();
-    }
-
     // Обновление всех текстовых полей
-    public void UpdateAllUI()
+    public void Update()
     {
         darkiumText.text = "Тёмниум: " + resources["obs"].ToString();
         fireoilText.text = "Огнемасло: " + resources["ign"].ToString();
@@ -62,7 +57,6 @@ public class ResourceManager : MonoBehaviour
         if (resources.ContainsKey(resourceName))
         {
             resources[resourceName] += amount;
-            UpdateUI(resourceName);
         }
     }
 
@@ -72,7 +66,6 @@ public class ResourceManager : MonoBehaviour
         if (resources.ContainsKey(resourceName) && resources[resourceName] >= amount)
         {
             resources[resourceName] -= amount;
-            UpdateUI(resourceName);
             return true;
         }
         return false;
@@ -83,33 +76,5 @@ public class ResourceManager : MonoBehaviour
     {
         return resources.ContainsKey(resourceName) && resources[resourceName] >= amount;
     }
-
-    // Обновление конкретного текстового поля
-    private void UpdateUI(string resourceName)
-    {
-        switch (resourceName)
-        {
-            case "obs":
-                darkiumText.text = "Тёмниум: " + resources[resourceName].ToString();
-                break;
-            case "ign":
-                fireoilText.text = "Огнемасло: " + resources[resourceName].ToString();
-                break;
-            case "ven":
-                toxidText.text = "Токсид: " + resources[resourceName].ToString();
-                break;
-            case "val":
-                prochnitText.text = "Прочнит: " + resources[resourceName].ToString();
-                break;
-            case "inst":
-                unstableText.text = "Нестабилий: " + resources[resourceName].ToString();
-                break;
-            case "pug":
-                putnarText.text = "Путнар: " + resources[resourceName].ToString();
-                break;
-            case "crtg":
-                cartridgesText.text = "Картриджи: " + resources[resourceName].ToString();
-                break;
-        }
-    }
+   
 }
