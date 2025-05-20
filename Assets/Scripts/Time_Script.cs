@@ -50,7 +50,7 @@ public class Time_Script : MonoBehaviour
 
             if (current_circle >= full_circles) { current_circle = 0; }
 
-            if (hour >= 24f) { hour = 0.0f; weather_flag = true; OxygenManager.oxygen -= 1; } else { hour += Time.deltaTime * time_speed; day_cycle += Time.deltaTime * time_speed; }
+            if (hour >= 24f) { hour = 0.0f; weather_flag = true; if (OxygenManager.oxygen > 0) { OxygenManager.oxygen -= 1; } } else { hour += Time.deltaTime * time_speed; day_cycle += Time.deltaTime * time_speed; }
 
             if (hour > (clock_frame + (current_circle * 16)) * (24f / 16f / full_circles) && hour <= (clock_frame + 1 + (current_circle * 16)) * (24f / 16f / full_circles)) { clock.sprite = Inactive_Sprites[clock_frame - 1]; clock_frame += 1; }
            
