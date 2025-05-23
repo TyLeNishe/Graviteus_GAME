@@ -23,7 +23,7 @@ public class PrinterResourceSystem : MonoBehaviour
         { "Тёмниум", "Огнемасло", "Токсид", "Прочнит", "Нестабилий", "Пугнар" };
 
     private int[] lastResourceValues;
-    private int lastTotal = 0;
+    // private int lastTotal = 0;
 
     private void Start()
     {
