@@ -48,7 +48,7 @@ public class CameraHovering : MonoBehaviour
 
         // Формулы скорости и наклона камеры
         moveSpeed = 1.5f * moveMult * WorldBorders.CamVelDist_Mult;
-        CameraTilt = (Mathf.Pow(CamPos.y, 1.9f) / 17) + 40;
+        CameraTilt = (Mathf.Pow(CamPos.y, 1.9f) / 17) + 30;
 
         // SHIFT
         if (Input.GetKey(KeyCode.LeftShift)) { moveMult = 2; } else { moveMult = 1; }

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class OxygenManager : MonoBehaviour
 {
-    public static float oxygen = 10f;
+    public static float oxygen = 2f;
     public Text Oxygen_text, DaysLeft_text;
     void Update()
     {
