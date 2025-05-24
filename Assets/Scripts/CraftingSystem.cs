@@ -7,41 +7,40 @@ public class CraftingSystem : MonoBehaviour
     [System.Serializable]
     public class CraftingRecipe
     {
-        public string resultItem;   
-        public int resultAmount = 1; 
+        [Tooltip("Ключ результата")]
+        public string resultItemKey;
+        public int resultAmount = 1;
 
-        public List<RequiredResource> requiredResources; 
+        [Tooltip("Необходимые ресурсы")]
+        public List<RequiredResource> requiredResources;
     }
 
     [System.Serializable]
     public class RequiredResource
     {
-        public string resourceName; 
-        public int amount;       
+        [Tooltip("Ключ ресурса")]
+        public string resourceKey; 
+        public int amount;
     }
 
-    public CraftingRecipe recipe; 
-
+    public CraftingRecipe recipe;
     private Button craftButton;
 
     void Start()
     {
         craftButton = GetComponent<Button>();
-        craftButton.onClick.AddListener(CraftItem);
+        if (craftButton != null)
+        {
+            craftButton.onClick.AddListener(TryCraft);
+        }
     }
 
-    public void CraftItem()
+    public void TryCraft()
     {
-        if (HasRequiredResources())
+        if (CanCraft())
         {
-            foreach (var req in recipe.requiredResources)
-            {
-                ResourceManager.Instance.RemoveResource(req.resourceName, req.amount);
-            }
-
-            ResourceManager.Instance.AddResource(recipe.resultItem, recipe.resultAmount);
-
-            Debug.Log($"Успешно создано: {recipe.resultAmount} {recipe.resultItem}!");
+            Craft();
+            Debug.Log($"Создано: {recipe.resultAmount} {recipe.resultItemKey}");
         }
         else
         {
@@ -49,13 +48,22 @@ public class CraftingSystem : MonoBehaviour
         }
     }
 
-    private bool HasRequiredResources()
+    private bool CanCraft()
     {
         foreach (var req in recipe.requiredResources)
         {
-            if (!ResourceManager.Instance.HasResource(req.resourceName, req.amount))
+            if (!ResourceManager.Instance.HasResource(req.resourceKey, req.amount))
                 return false;
         }
         return true;
+    }
+
+    private void Craft()
+    {
+        foreach (var req in recipe.requiredResources)
+        {
+            ResourceManager.Instance.RemoveResource(req.resourceKey, req.amount);
+        }
+        ResourceManager.Instance.AddResource(recipe.resultItemKey, recipe.resultAmount);
     }
 }

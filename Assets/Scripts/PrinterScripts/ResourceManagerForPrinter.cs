@@ -6,17 +6,17 @@ public class PrinterResourceSystem : MonoBehaviour
     [System.Serializable]
     public class ResourceMapping
     {
-        public string displayName; // "Тёмниум"
-        public string resourceKey; // "obs"
-        public int price;         // Цена в картриджах
+        public string displayName;
+        public string resourceKey;
+        public int price;
     }
 
     [Header("Настройки ресурсов")]
     public ResourceMapping[] resourceMappings;
 
     [Header("UI элементы")]
-    public Text[] resourceTexts; // Поля ввода (должны совпадать по порядку с resourceMappings)
-    public Text[] resourceTextsFinal; // Финальные ресурсы
+    public Text[] resourceTexts;
+    public Text[] resourceTextsFinal;
     public Text totalText;
     public Button recycleButton;
     public Button sellButton;
@@ -26,7 +26,6 @@ public class PrinterResourceSystem : MonoBehaviour
 
     private void Start()
     {
-        // Проверка конфигурации
         if (resourceTexts.Length != resourceMappings.Length)
         {
             Debug.LogError("Количество ресурсов не совпадает с настройками!");
