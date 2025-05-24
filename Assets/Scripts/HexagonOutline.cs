@@ -34,7 +34,7 @@ public class HexagonOutline : MonoBehaviour
 
     private void UpdateOutlineColor()
     {
-        if (landscape != null)
+        if (landscape.mountain == true || landscape.rift == true)
         {
             lineRenderer.material.color = landscape.IsDefault() ? defaultColor : landscapeColor;
         }

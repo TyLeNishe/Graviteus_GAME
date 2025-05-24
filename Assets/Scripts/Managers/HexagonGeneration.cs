@@ -497,6 +497,7 @@ public class HexagonGeneration : MonoBehaviour
             }
         }
     }
+    /*
     public void CreateFactories()
     {
         GameObject selectedPrefab = new();
@@ -518,6 +519,7 @@ public class HexagonGeneration : MonoBehaviour
             }
         }
     }
+    */
     void CreateToxideGeyser()
     {
         float minDistanceForGeyser = 8.0f;

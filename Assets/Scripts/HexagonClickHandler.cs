@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class HexagonClickHandler : MonoBehaviour
 {
-    public static HexagonOutline outline;
+    private HexagonOutline outline;
     private ConcentrationManager concentration;
     private BuildManager buildManager;
     private HexagonLandscape landscape;
-    public static HexagonOutline currentlySelected;
+    private static HexagonOutline currentlySelected;
     private void Start()
     {
         landscape = GetComponent<HexagonLandscape>();
@@ -51,14 +51,14 @@ public class HexagonClickHandler : MonoBehaviour
 
         outline.ToggleOutline(true);
         currentlySelected = outline;
-        if (landscape != null && landscape.IsDefault())
+        if (landscape != null && landscape.mountain == false && landscape.rift == false)
         {
             buildManager.panelActivate = true;
             buildManager.obs = concentration.obsConcentration;
             buildManager.ign = concentration.ignConcentration;
             buildManager.ven = concentration.venConcentration;
         }
-        if (landscape != null && !landscape.IsDefault())
+        if (landscape != null && (landscape.mountain == true || landscape.rift == true))
         {
             buildManager.panelActivate = false;
             buildManager.panel.gameObject.SetActive(false);
