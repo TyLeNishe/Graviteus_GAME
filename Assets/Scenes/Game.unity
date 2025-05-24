@@ -12359,7 +12359,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 888987943}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1129864306}
+        m_TargetAssemblyTypeName: HexagonGeneration, Assembly-CSharp
+        m_MethodName: CreateFactories
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &888987943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14702,6 +14714,9 @@ MonoBehaviour:
   - {fileID: 236679478592812834, guid: fe798a82bf9f25840ba043bc5cf7dfcf, type: 3}
   geyserPrefabs:
   - {fileID: 2308394685166807716, guid: 527be16161fc31a4e853c1c01612062a, type: 3}
+  Obscurrium_factoryPrefabs: {fileID: 8908980972384994318, guid: 080e2d2dd4da72f49a63b398ac1d37f4, type: 3}
+  Ignoleum_factoryPrefabs: {fileID: 924462075109486732, guid: 49a63d4da8430b14fbeb09ffaf16071e, type: 3}
+  Venesum_factoryPrefabs: {fileID: 5888004617985809049, guid: d2608579bb059f54c9bb76e14c6edc15, type: 3}
   parent: {fileID: 1129864305}
   maxMountains: 10
   maxRifts: 2
@@ -17400,9 +17415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2ccd2465cc5c3409b5932e3816c23d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isObs: 1
-  isIgn: 0
-  isVen: 0
   title: {fileID: 1687282700}
   description: {fileID: 1540654024}
   cost1: {fileID: 682363945}

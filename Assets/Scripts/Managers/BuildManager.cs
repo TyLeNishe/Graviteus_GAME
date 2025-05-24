@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.OnScreen;
 using UnityEngine.UI;
 public class BuildManager : MonoBehaviour
 {
@@ -26,49 +24,49 @@ public class BuildManager : MonoBehaviour
             if (obs > 0 && obs <= 50)
             {
                 obsText.color = new Color32(191, 7, 7, 255);
-                obsText.text = "Ò¸ìíèóì: ÍÈÇÊÀß";
+                obsText.text = "Ð¢Ñ‘Ð¼Ð½Ð¸ÑƒÐ¼: ÐÐ˜Ð—ÐšÐÐ¯";
             }
             else if (obs >= 51 && obs <= 76)
             {
                 obsText.color = new Color32(255, 196, 0, 255);
-                obsText.text = "Ò¸ìíèóì: ÑÐÅÄÍßß";
+                obsText.text = "Ð¢Ñ‘Ð¼Ð½Ð¸ÑƒÐ¼: Ð¡Ð Ð•Ð”ÐÐ¯Ð¯";
             }
             else
             {
                 obsText.color = new Color32(0, 240, 7, 255);
-                obsText.text = "Ò¸ìíèóì: ÂÛÑÎÊÀß";
+                obsText.text = "Ð¢Ñ‘Ð¼Ð½Ð¸ÑƒÐ¼: Ð’Ð«Ð¡ÐžÐšÐÐ¯";
             }
 
             if (ign > 0 && ign <= 50)
             {
                 ignText.color = new Color32(191, 7, 7, 255);
-                ignText.text = "Îãíåìàñëî: ÍÈÇÊÀß";
+                ignText.text = "ÐžÐ³Ð½ÐµÐ¼Ð°ÑÐ»Ð¾: ÐÐ˜Ð—ÐšÐÐ¯";
             }
             else if (ign >= 51 && ign <= 76)
             {
                 ignText.color = new Color32(255, 196, 0, 255);
-                ignText.text = "Îãíåìàñëî: ÑÐÅÄÍßß";
+                ignText.text = "ÐžÐ³Ð½ÐµÐ¼Ð°ÑÐ»Ð¾: Ð¡Ð Ð•Ð”ÐÐ¯Ð¯";
             }
             else
             {
                 ignText.color = new Color32(0, 240, 7, 255);
-                ignText.text = "Îãíåìàñëî: ÂÛÑÎÊÀß";
+                ignText.text = "ÐžÐ³Ð½ÐµÐ¼Ð°ÑÐ»Ð¾: Ð’Ð«Ð¡ÐžÐšÐÐ¯";
             }
 
             if (ven > 0 && ven <= 50)
             {
                 venText.color = new Color32(191, 7, 7, 255);
-                venText.text = "Òîêñèä: ÍÈÇÊÀß";
+                venText.text = "Ð¢Ð¾ÐºÑÐ¸Ð´: ÐÐ˜Ð—ÐšÐÐ¯";
             }
             else if (ven >= 51 && ven <= 76)
             {
                 venText.color = new Color32(255, 196, 0, 255);
-                venText.text = "Òîêñèä: ÑÐÅÄÍßß";
+                venText.text = "Ð¢Ð¾ÐºÑÐ¸Ð´: Ð¡Ð Ð•Ð”ÐÐ¯Ð¯";
             }
             else
             {
                 venText.color = new Color32(0, 240, 7, 255);
-                venText.text = "Òîêñèä: ÂÛÑÎÊÀß";
+                venText.text = "Ð¢Ð¾ÐºÑÐ¸Ð´: Ð’Ð«Ð¡ÐžÐšÐÐ¯";
             }
 
             panel.gameObject.SetActive(true);

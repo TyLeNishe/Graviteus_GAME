@@ -7,7 +7,7 @@ public class DirectionChosen : MonoBehaviour
 
     public void UpHover_Chosen()
     {
-        while (hov_z < hov_z_cap_up) { hov_z += acceleration; }    
+        while (hov_z < hov_z_cap_up) { hov_z += acceleration; }
     }
     public void DownHover_Chosen()
     {

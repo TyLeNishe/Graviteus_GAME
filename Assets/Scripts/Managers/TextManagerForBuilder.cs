@@ -3,9 +3,7 @@ using UnityEngine.UI;
 
 public class TextManagerForBuilder : MonoBehaviour
 {
-    public bool isObs = true;
-    public bool isIgn = false;
-    public bool isVen = false;
+    public static bool isObs = true, isIgn = false, isVen = false;
     public Text title;
     public Text description;
     public Text cost1;

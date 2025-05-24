@@ -1,13 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class ResourceManager : MonoBehaviour
 {
     public static ResourceManager Instance;
 
     // Ресурсы и их количество
-    public static Dictionary<string, float> resources = new Dictionary<string, float>()
+    public static Dictionary<string, float> resources = new()
     {
         {"obs", 20},
         {"ign", 20},

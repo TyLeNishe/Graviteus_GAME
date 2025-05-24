@@ -1,16 +1,14 @@
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class QuotaScript : MonoBehaviour
 {
     public Dictionary<string, float> quota =
-    new Dictionary<string, float>();
+    new();
 
     public Dictionary<string, int> weight =
-    new Dictionary<string, int>();
+    new();
 
     public float quota_difficulty;
     public string[] resourceID = { "obs", "ign", "ven", "val", "inst", "pug" }, chosen_resource = { "null", "null", "null" };
@@ -54,7 +52,7 @@ public class QuotaScript : MonoBehaviour
     }
 
     public void NewQuota()
-    {    
+    {
         quota_difficulty = Random.Range(1, 4);
         income = Mathf.FloorToInt(Random.Range(quota_difficulty + ((quota_difficulty - 1) * 10), quota_difficulty + 10 + ((quota_difficulty - 1) * 10)));
 
@@ -89,7 +87,7 @@ public class QuotaScript : MonoBehaviour
 
     void Update()
     {
-        
+
 
         if (quota_difficulty >= 1) { res1_text.text = chosen_resource[0] + ": " + quota[chosen_resource[0]].ToString(); }
         if (quota_difficulty >= 2) { res2_text.text = chosen_resource[1] + ": " + quota[chosen_resource[1]].ToString(); } else { res2_text.text = ""; }

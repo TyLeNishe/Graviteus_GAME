@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WorldBorders : MonoBehaviour
 {
-    public static float cell_width = 1.4f;   
+    public static float cell_width = 1.4f;
 
     public static float North_Border = cell_width * HexagonGeneration.layers - cell_width * 5;
     public static float South_Border = -cell_width * HexagonGeneration.layers - cell_width * 8;

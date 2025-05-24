@@ -1,35 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using NUnit.Framework.Constraints;
+using System.Collections.Generic;
 
 using System.Linq;
-
+using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class HexagonGeneration : MonoBehaviour
 {
     public GameObject[] hexPrefabs, stonePrefabs, mountainPrefabs, puzzlePrefabs, meteoritePrefabs, fireoilpoolPrefabs, geyserPrefabs;
+    public GameObject Obscurrium_factoryPrefabs, Ignoleum_factoryPrefabs, Venesum_factoryPrefabs;
     public GameObject parent;
     public static int layers = 10;
     public int maxMountains, maxRifts, maxMeteorite, maxFireoilPool, maxGeyser;
     //нужны для Data
-    public static List<GameObject> hexagons = new List<GameObject>();
-    public static List<GameObject> stones = new List<GameObject>();
-    public static List<GameObject> mountains = new List<GameObject>();
-    public static List<GameObject> puzzles = new List<GameObject>();
-    public static List<GameObject> meteorites = new List<GameObject>();
-    public static List<GameObject> fireoilpools = new List<GameObject>();
-    public static List<GameObject> geysers = new List<GameObject>();
-    private List<GameObject> blockedHexes = new List<GameObject>();
+    public static List<GameObject> factories = new();
+    public static List<GameObject> hexagons = new();
+    public static List<GameObject> stones = new();
+    public static List<GameObject> mountains = new();
+    public static List<GameObject> puzzles = new();
+    public static List<GameObject> meteorites = new();
+    public static List<GameObject> fireoilpools = new();
+    public static List<GameObject> geysers = new();
+    private List<GameObject> blockedHexes = new();
 
-    private HashSet<Vector3> occupiedPos = new HashSet<Vector3>();
+    private HashSet<Vector3> occupiedPos = new();
     private int seed;
     private int mountainCount, geyserCount, fireoilCount, meteoriteCount;
     private float nearRadius = 1f;
     private float farRadius = 2f;
 
-    private List<GameObject> nearNeighbors = new List<GameObject>();
-    private List<GameObject> farNeighbors = new List<GameObject>();
-
+    private List<GameObject> nearNeighbors = new();
+    private List<GameObject> farNeighbors = new();
+    private int factoryType;
     private const float nearHeightReduction = 1f;
     private const float farHeightReduction = 2f;
 
@@ -132,7 +135,7 @@ public class HexagonGeneration : MonoBehaviour
     {
         for (int layer = 0; layer < layers; layer++)
         {
-            List<GameObject> newHexes = new List<GameObject>();
+            List<GameObject> newHexes = new();
 
             foreach (var hex in hexagons)
             {
@@ -173,31 +176,6 @@ public class HexagonGeneration : MonoBehaviour
             }
         }
     }
-
-    // void GenerateBuildings()
-    // {
-    //     foreach (var hex in hexagons)
-    //     {
-    //         BuildManager buildManager = hex.GetComponent<BuildManager>();
-    //         if (buildManager.isActive == true && buildManager.panelActivate == true) //&& тут проверка, что кнопка нажата)
-    //         {
-    //             BuildingHelper buildingHelper = hex.GetComponent<BuildingHelper>();
-    //             HexagonBuildings hexagonBuildings = hex.GetComponent <HexagonBuildings>();
-    //             if (buildingHelper.Mode == 1)
-    //             {
-    //                 hexagonBuildings.Finibus_factory = Instantiate(buildingHelper.Finibus_factory_prefab, hex.transform.position, Quaternion.identity);
-    //             }
-    //             if (buildingHelper.Mode == 2)
-    //             {
-    //                 hexagonBuildings.Generator_factory = Instantiate(buildingHelper.Generator_factory_prefab, hex.transform.position, Quaternion.identity);
-    //             }
-    //             if (buildingHelper.Mode == 3)
-    //             {
-    //                 hexagonBuildings.Venesum_factory = Instantiate(buildingHelper.Venesum_factory_prefab, hex.transform.position, Quaternion.identity);
-    //             }
-    //         }
-    //     }
-    // }
     bool IsOccupied(Vector3 pos)
     {
         foreach (var p in occupiedPos)
@@ -268,7 +246,7 @@ public class HexagonGeneration : MonoBehaviour
     GameObject GetNeighbor(GameObject hex)
     {
         Collider[] colliders = Physics.OverlapSphere(hex.transform.position, nearRadius);
-        List<GameObject> neighbors = new List<GameObject>();
+        List<GameObject> neighbors = new();
 
         foreach (var collider in colliders)
         {
@@ -519,7 +497,37 @@ public class HexagonGeneration : MonoBehaviour
             }
         }
     }
-
+    
+    public void CreateFactories()
+    {
+        foreach (var hex in hexagons)
+        {
+            HexagonOutline outline = hex.GetComponent<HexagonOutline>();
+            if (outline != null && HexagonClickHandler.IsSelected(outline))
+            {
+                HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
+                if (!landscape.rift && !landscape.mountain && !landscape.factory)
+                {
+                    GameObject selectedPrefab = new();
+                    float PrefPos = 0.2f;
+                    int factoryType = -1;
+                    if (TextManagerForBuilder.isObs == true) { factoryType = 0; PrefPos = 3f; }
+                    if (TextManagerForBuilder.isIgn == true) { factoryType = 1; PrefPos = 3f; }
+                    if (TextManagerForBuilder.isVen == true) { factoryType = 2; PrefPos = 3f; }
+                    if (factoryType == 0) { selectedPrefab = Obscurrium_factoryPrefabs; }
+                    else if (factoryType == 1) { selectedPrefab = Ignoleum_factoryPrefabs; }
+                    else if (factoryType == 2) { selectedPrefab = Venesum_factoryPrefabs; }
+                    Vector3 Realposition = hex.transform.position;
+                    Realposition += new Vector3(0, PrefPos, 0);
+                    GameObject factory = Instantiate(selectedPrefab, Realposition, Quaternion.identity);
+                    factories.Add(factory);
+                    landscape.ActivateFactory();
+                }
+            }
+            
+        }
+    }
+    
     void CreateToxideGeyser()
     {
         float minDistanceForGeyser = 8.0f;

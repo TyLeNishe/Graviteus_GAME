@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class CraftingSystem : MonoBehaviour
 {
@@ -19,7 +19,7 @@ public class CraftingSystem : MonoBehaviour
     public class RequiredResource
     {
         [Tooltip("Ключ ресурса")]
-        public string resourceKey; 
+        public string resourceKey;
         public int amount;
     }
 

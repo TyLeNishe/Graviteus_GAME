@@ -27,7 +27,10 @@ public class HexagonClickHandler : MonoBehaviour
             Debug.LogError("Builder такого нет");
         }
     }
-
+    public static bool IsSelected(HexagonOutline outline)
+    {
+        return currentlySelected == outline;
+    }
     private void Update()
     {
         if (!buildManager.isActive && currentlySelected == outline)
@@ -51,14 +54,14 @@ public class HexagonClickHandler : MonoBehaviour
 
         outline.ToggleOutline(true);
         currentlySelected = outline;
-        if (landscape != null && landscape.IsDefault())
+        if (landscape != null && landscape.mountain == false && landscape.rift == false)
         {
             buildManager.panelActivate = true;
             buildManager.obs = concentration.obsConcentration;
             buildManager.ign = concentration.ignConcentration;
             buildManager.ven = concentration.venConcentration;
         }
-        if (landscape != null && !landscape.IsDefault())
+        if (landscape != null && (landscape.mountain == true || landscape.rift == true))
         {
             buildManager.panelActivate = false;
             buildManager.panel.gameObject.SetActive(false);
