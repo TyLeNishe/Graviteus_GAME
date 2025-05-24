@@ -27,7 +27,10 @@ public class HexagonClickHandler : MonoBehaviour
             Debug.LogError("Builder такого нет");
         }
     }
-
+    public static bool IsSelected(HexagonOutline outline)
+    {
+        return currentlySelected == outline;
+    }
     private void Update()
     {
         if (!buildManager.isActive && currentlySelected == outline)

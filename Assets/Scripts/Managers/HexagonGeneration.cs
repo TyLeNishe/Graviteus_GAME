@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using System.Linq;
-
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -497,29 +497,38 @@ public class HexagonGeneration : MonoBehaviour
             }
         }
     }
-    /*
+    
     public void CreateFactories()
     {
         GameObject selectedPrefab = new();
         foreach (var hex in hexagons)
         {
-            HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
-            if(!landscape.rift && !landscape.mountain)
+            HexagonOutline outline = hex.GetComponent<HexagonOutline>();
+            if (outline != null && HexagonClickHandler.IsSelected(outline))
             {
-                // Выбираем случайный тип фабрики (0, 1 или 2)
-                int factoryType = -1;
-                if (TextManagerForBuilder.isObs == true) { factoryType = 0; }
-                if (TextManagerForBuilder.isIgn == true) { factoryType = 1; }
-                if (TextManagerForBuilder.isVen == true) { factoryType = 2; }
-                if (factoryType == 0)  {selectedPrefab = Obscurrium_factoryPrefabs; }
-                else if (factoryType == 1) {selectedPrefab = Ignoleum_factoryPrefabs; }
-                else if (factoryType == 2) {selectedPrefab = Venesum_factoryPrefabs; }
-                GameObject factory = Instantiate(selectedPrefab, hex.transform.position, Quaternion.identity);
-                factories.Add(factory);
+                HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
+                if (!landscape.rift && !landscape.mountain && !landscape.factory)
+                {
+                    // Выбираем случайный тип фабрики (0, 1 или 2)
+                    float PrefPos = 0.2f;
+                    int factoryType = -1;
+                    if (TextManagerForBuilder.isObs == true) { factoryType = 0; PrefPos = 3f; }
+                    if (TextManagerForBuilder.isIgn == true) { factoryType = 1; PrefPos = 3f; }
+                    if (TextManagerForBuilder.isVen == true) { factoryType = 2; PrefPos = 3f; }
+                    if (factoryType == 0) { selectedPrefab = Obscurrium_factoryPrefabs; }
+                    else if (factoryType == 1) { selectedPrefab = Ignoleum_factoryPrefabs; }
+                    else if (factoryType == 2) { selectedPrefab = Venesum_factoryPrefabs; }
+                    Vector3 Realposition = hex.transform.position;
+                    Realposition += new Vector3(0, PrefPos, 0);
+                    GameObject factory = Instantiate(selectedPrefab, Realposition, Quaternion.identity);
+                    factories.Add(factory);
+                    landscape.ActivateFactory();
+                }
             }
+            
         }
     }
-    */
+    
     void CreateToxideGeyser()
     {
         float minDistanceForGeyser = 8.0f;
