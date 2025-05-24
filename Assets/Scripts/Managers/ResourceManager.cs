@@ -60,6 +60,11 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
+    public float GetResourceAmount(string resourceKey)
+    {
+        return resources.ContainsKey(resourceKey) ? resources[resourceKey] : 0;
+    }
+
     // Убрать ресурсы
     public bool RemoveResource(string resourceName, int amount)
     {
@@ -76,5 +81,4 @@ public class ResourceManager : MonoBehaviour
     {
         return resources.ContainsKey(resourceName) && resources[resourceName] >= amount;
     }
-
 }

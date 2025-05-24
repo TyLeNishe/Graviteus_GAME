@@ -6,7 +6,7 @@ public class Time_Script : MonoBehaviour
     public List<Sprite> Active_Sprites, Inactive_Sprites;
     public Text Hours, Minutes, Day;
 
-    private float hour = 0, full_circles = 8, current_circle = 0, time_speed = 1, day_cycle = 24f*2, state_lenth = 48f;
+    private float hour = 0, full_circles = 8, current_circle = 0, time_speed = 1, day_cycle = 24f * 2, state_lenth = 48f;
     private int clock_frame = 1, sun_state = 0; //0 - Восход, 1 - День, 2 - Закат, 3 - Ночь
     public Image clock;
     public Light Light;
@@ -33,8 +33,7 @@ public class Time_Script : MonoBehaviour
     void Update()
     {
         if (!paused)
-        {
-            Debug.Log(sun_state);
+        {   Debug.Log(sun_state);
             if (sun_state == 0) { Light.intensity = (day_cycle) / state_lenth; }
             if (sun_state == 2) { Light.intensity = (day_cycle - state_lenth * 3) / (-state_lenth); }
 

@@ -500,7 +500,6 @@ public class HexagonGeneration : MonoBehaviour
     
     public void CreateFactories()
     {
-        GameObject selectedPrefab = new();
         foreach (var hex in hexagons)
         {
             HexagonOutline outline = hex.GetComponent<HexagonOutline>();
@@ -509,7 +508,7 @@ public class HexagonGeneration : MonoBehaviour
                 HexagonLandscape landscape = hex.GetComponent<HexagonLandscape>();
                 if (!landscape.rift && !landscape.mountain && !landscape.factory)
                 {
-                    // Выбираем случайный тип фабрики (0, 1 или 2)
+                    GameObject selectedPrefab = new();
                     float PrefPos = 0.2f;
                     int factoryType = -1;
                     if (TextManagerForBuilder.isObs == true) { factoryType = 0; PrefPos = 3f; }
