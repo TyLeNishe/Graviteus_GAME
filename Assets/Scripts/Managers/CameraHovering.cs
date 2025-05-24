@@ -38,9 +38,9 @@ public class CameraHovering : MonoBehaviour
         if (CamPos.x >= WorldBorders.East_Border) { east_scroll_enabled = 0; } else { east_scroll_enabled = 1; }
         if (CamPos.x <= WorldBorders.West_Border) { west_scroll_enabled = 0; } else { west_scroll_enabled = 1; }
 
-        if (CamPos.y >= WorldBorders.Upper_Border) { up_scroll_enabled = 0; } 
+        if (CamPos.y >= WorldBorders.Upper_Border) { up_scroll_enabled = 0; }
         else { up_scroll_enabled = 1; }
-        if (CamPos.y <= WorldBorders.Bottom_Border) { down_scroll_enabled = 0; } 
+        if (CamPos.y <= WorldBorders.Bottom_Border) { down_scroll_enabled = 0; }
         else { down_scroll_enabled = 1; }
 
         if (CamPos.z >= WorldBorders.North_Border) { north_scroll_enabled = 0; } else { north_scroll_enabled = 1; }
@@ -59,7 +59,7 @@ public class CameraHovering : MonoBehaviour
             if (Key_S) { DirectionChosen.hov_z = -1f * south_scroll_enabled; smoothTime = 0.2f; }
             if (Key_D) { DirectionChosen.hov_x = 1f * east_scroll_enabled; smoothTime = 0.2f; }
             if (Key_A) { DirectionChosen.hov_x = -1f * west_scroll_enabled; smoothTime = 0.2f; }
-        
+
             // Остановка движения
             if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S)) { DirectionChosen.hov_z = 0f; smoothTime = 0.6f; }
             if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) { DirectionChosen.hov_x = 0f; smoothTime = 0.6f; }

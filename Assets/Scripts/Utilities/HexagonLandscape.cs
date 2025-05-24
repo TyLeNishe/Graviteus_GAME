@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HexagonLandscape : MonoBehaviour
 {
-    public bool mountain = false, rift = false, geyser = false, meteorite = false, fireoilpool = false;
+    public bool mountain = false, rift = false, geyser = false, meteorite = false, fireoilpool = false, factory = false ;
 
     public bool IsDefault()
     {
@@ -15,6 +15,10 @@ public class HexagonLandscape : MonoBehaviour
     public void ActivateRift()
     {
         rift = true;
+    }
+    public void ActivateFactory()
+    {
+        factory = true;
     }
     public void ActivateMeteorite()
     {

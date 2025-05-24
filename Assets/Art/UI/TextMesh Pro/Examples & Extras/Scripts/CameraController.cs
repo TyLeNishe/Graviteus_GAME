@@ -1,10 +1,9 @@
 using UnityEngine;
-using System.Collections;
 
 
 namespace TMPro.Examples
 {
-    
+
     public class CameraController : MonoBehaviour
     {
         public enum CameraModes { Follow, Isometric, Free }
@@ -199,9 +198,8 @@ namespace TMPro.Examples
                 if (Input.GetMouseButton(0))
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
 
-                    if (Physics.Raycast(ray, out hit, 300, 1 << 10 | 1 << 11 | 1 << 12 | 1 << 14))
+                    if (Physics.Raycast(ray, out RaycastHit hit, 300, 1 << 10 | 1 << 11 | 1 << 12 | 1 << 14))
                     {
                         if (hit.transform == CameraTarget)
                         {
@@ -225,8 +223,7 @@ namespace TMPro.Examples
                     {
                         // We need a Dummy Target to anchor the Camera
                         dummyTarget = new GameObject("Camera Target").transform;
-                        dummyTarget.position = CameraTarget.position;
-                        dummyTarget.rotation = CameraTarget.rotation;
+                        dummyTarget.SetPositionAndRotation(CameraTarget.position, CameraTarget.rotation);
                         CameraTarget = dummyTarget;
                         previousSmoothing = MovementSmoothing;
                         MovementSmoothing = false;
@@ -234,8 +231,7 @@ namespace TMPro.Examples
                     else if (dummyTarget != CameraTarget)
                     {
                         // Move DummyTarget to CameraTarget
-                        dummyTarget.position = CameraTarget.position;
-                        dummyTarget.rotation = CameraTarget.rotation;
+                        dummyTarget.SetPositionAndRotation(CameraTarget.position, CameraTarget.rotation);
                         CameraTarget = dummyTarget;
                         previousSmoothing = MovementSmoothing;
                         MovementSmoothing = false;

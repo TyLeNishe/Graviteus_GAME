@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class HexagonClickHandler : MonoBehaviour
 {
-    private HexagonOutline outline;
+    public static HexagonOutline outline;
     private ConcentrationManager concentration;
     private BuildManager buildManager;
     private HexagonLandscape landscape;
-    private static HexagonOutline currentlySelected;
+    public static HexagonOutline currentlySelected;
     private void Start()
     {
         landscape = GetComponent<HexagonLandscape>();

@@ -1,26 +1,26 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class CraftingSystem : MonoBehaviour
 {
     [System.Serializable]
     public class CraftingRecipe
     {
-        public string resultItem;   
-        public int resultAmount = 1; 
+        public string resultItem;
+        public int resultAmount = 1;
 
-        public List<RequiredResource> requiredResources; 
+        public List<RequiredResource> requiredResources;
     }
 
     [System.Serializable]
     public class RequiredResource
     {
-        public string resourceName; 
-        public int amount;       
+        public string resourceName;
+        public int amount;
     }
 
-    public CraftingRecipe recipe; 
+    public CraftingRecipe recipe;
 
     private Button craftButton;
 

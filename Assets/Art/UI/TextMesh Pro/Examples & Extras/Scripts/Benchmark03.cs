@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.TextCore.LowLevel;
 
 
@@ -14,12 +13,6 @@ namespace TMPro.Examples
         public BenchmarkType Benchmark;
 
         public Font SourceFont;
-
-
-        void Awake()
-        {
-
-        }
 
 
         void Start()
@@ -54,7 +47,7 @@ namespace TMPro.Examples
                     case BenchmarkType.TMP_SDF:
                     case BenchmarkType.TMP_BITMAP_MOBILE:
                         {
-                            GameObject go = new GameObject();
+                            GameObject go = new();
                             go.transform.position = new Vector3(0, 1.2f, 0);
 
                             TextMeshPro textComponent = go.AddComponent<TextMeshPro>();
@@ -71,7 +64,7 @@ namespace TMPro.Examples
                         break;
                     case BenchmarkType.TEXTMESH_BITMAP:
                         {
-                            GameObject go = new GameObject();
+                            GameObject go = new();
                             go.transform.position = new Vector3(0, 1.2f, 0);
 
                             TextMesh textMesh = go.AddComponent<TextMesh>();

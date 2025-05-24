@@ -1,6 +1,6 @@
-using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HexagonSaveLoad : MonoBehaviour
 {
@@ -37,7 +37,7 @@ public class HexagonSaveLoad : MonoBehaviour
 
     public void SaveMap(string fileName)
     {
-        MapData mapData = new MapData();
+        MapData mapData = new();
 
         foreach (var hex in HexagonGeneration.hexagons)
         {
@@ -45,7 +45,7 @@ public class HexagonSaveLoad : MonoBehaviour
 
             HexagonProfile profile = hex.GetComponent<HexagonProfile>();
 
-            HexagonData hexData = new HexagonData
+            HexagonData hexData = new()
             {
                 position = hex.transform.position,
                 rotation = hex.transform.rotation.eulerAngles,
@@ -65,7 +65,7 @@ public class HexagonSaveLoad : MonoBehaviour
         foreach (var mountain in HexagonGeneration.mountains)
         {
             if (mountain == null) continue;
-            MountainData mountainData = new MountainData
+            MountainData mountainData = new()
             {
                 position = mountain.transform.position,
                 rotation = mountain.transform.rotation.eulerAngles,
@@ -77,7 +77,7 @@ public class HexagonSaveLoad : MonoBehaviour
         foreach (var meteorite in HexagonGeneration.meteorites)
         {
             if (meteorite == null) continue;
-            MeteoriteData meteoriteData = new MeteoriteData
+            MeteoriteData meteoriteData = new()
             {
                 position = meteorite.transform.position,
                 rotation = meteorite.transform.rotation.eulerAngles,
@@ -89,7 +89,7 @@ public class HexagonSaveLoad : MonoBehaviour
         foreach (var fireoilpool in HexagonGeneration.fireoilpools)
         {
             if (fireoilpool == null) continue;
-            FireOilPoolData fireoilpoolData = new FireOilPoolData
+            FireOilPoolData fireoilpoolData = new()
             {
                 position = fireoilpool.transform.position,
                 rotation = fireoilpool.transform.rotation.eulerAngles,
@@ -101,7 +101,7 @@ public class HexagonSaveLoad : MonoBehaviour
         foreach (var geyser in HexagonGeneration.geysers)
         {
             if (geyser == null) continue;
-            GeyserData geyserData = new GeyserData
+            GeyserData geyserData = new()
             {
                 position = geyser.transform.position,
                 rotation = geyser.transform.rotation.eulerAngles,
@@ -113,7 +113,7 @@ public class HexagonSaveLoad : MonoBehaviour
         foreach (var stone in HexagonGeneration.stones)
         {
             if (stone == null) continue;
-            StoneData stoneData = new StoneData
+            StoneData stoneData = new()
             {
                 position = stone.transform.position,
                 rotation = stone.transform.rotation.eulerAngles,
@@ -125,7 +125,7 @@ public class HexagonSaveLoad : MonoBehaviour
         foreach (var puzzle in HexagonGeneration.puzzles)
         {
             if (puzzle == null) continue;
-            PuzzleData puzzleData = new PuzzleData
+            PuzzleData puzzleData = new()
             {
                 position = puzzle.transform.position,
                 rotation = puzzle.transform.rotation.eulerAngles,

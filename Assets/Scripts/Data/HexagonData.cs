@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 [System.Serializable]
 public class HexagonData
@@ -20,7 +19,7 @@ public class StoneData
 {
     public Vector3 position;
     public Vector3 rotation;
-    public int prefabIndex; 
+    public int prefabIndex;
 }
 
 [System.Serializable]

@@ -7,7 +7,7 @@ public class OxygenManager : MonoBehaviour
     public Text Oxygen_text, DaysLeft_text;
     void Update()
     {
-        if (oxygen >= 1000f) { Oxygen_text.text = oxygen.ToString(); } 
+        if (oxygen >= 1000f) { Oxygen_text.text = oxygen.ToString(); }
         else if (oxygen >= 100f) { Oxygen_text.text = "0" + oxygen.ToString(); }
         else if (oxygen >= 10f) { Oxygen_text.text = "00" + oxygen.ToString(); }
         else if (oxygen >= 1f) { Oxygen_text.text = "000" + oxygen.ToString(); }
